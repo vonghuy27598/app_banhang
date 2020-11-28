@@ -1,0 +1,66 @@
+﻿@model IEnumerable<DA_Web.ViewModel.MenuView>
+
+
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Humberger Begin -->
+<div class="humberger__menu__overlay"></div>
+
+
+
+<!-- Header Section Begin -->
+@*<header class="header">
+    <div class="container" id="content_tainer">
+        <div id="navbar">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo" id="logo">
+                        <a href="@Url.Action("TrangChu","Display")"><img src="/Content/image/logo/logo_black.png" alt="" id="img_logo"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            // When the user scrolls down 80px from the top of the document, resize the navbar's padding and the logo's font size
+            window.onscroll = function () { scrollFunction() };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+                    document.getElementById("navbar").style.position = "fixed";
+                    document.getElementById("navbar").style.backgroundColor = "#7fad39";
+                    document.getElementById("logo").style.width = "20%";
+                    document.getElementById("logo").style.padding = "0px";
+                    document.getElementById("logo").style.marginLeft = "15px";
+                    document.getElementById("img_logo").src = "/Content/image/logo/logo_black.png";
+                    document.getElementById("content_tainer").style.paddingLeft = "0";
+                    document.getElementById("content_tainer").style.paddingRight = "0";
+                    document.getElementById("humberger__open").style.color = "#fff";
+                    document.getElementById("humberger__open").style.borderColor = "#fff";
+                    document.getElementById("header__cart").style.color = "#fff";
+                    document.getElementById("header__cart").style.marginLeft = "15px";
+                    document.getElementById("fa-cart").style.color = "#fff";
+
+                } else {
+                    document.getElementById("navbar").style.position = "unset";
+                    document.getElementById("navbar").style.backgroundColor = "transparent";
+                    document.getElementById("logo").style.width = "60%";
+                    document.getElementById("logo").style.marginLeft = "0px";
+                    document.getElementById("img_logo").src = "/Content/image/logo/logo_black.png";
+                    document.getElementById("content_tainer").style.paddingLeft = "15px";
+                    document.getElementById("content_tainer").style.paddingRight = "15px";
+                    document.getElementById("humberger__open").style.color = "#000";
+                    document.getElementById("humberger__open").style.borderColor = "#000";
+                    document.getElementById("header__cart").style.color = "#000";
+                    document.getElementById("header__cart").style.marginLeft = "0px";
+                    document.getElementById("fa-cart").style.color = "#000";
+                }
+            }
+        </script>
+
+
+    </div>
+</header>*@
+

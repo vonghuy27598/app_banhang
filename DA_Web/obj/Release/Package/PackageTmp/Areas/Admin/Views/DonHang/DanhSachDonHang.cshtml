@@ -1,0 +1,116 @@
+﻿@model IEnumerable<DA_Web.ViewModel.HoaDon>
+@{
+    ViewBag.Title = "DanhSachDonHang";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+<script type="text/javascript">
+    function Selected() {
+
+        var d = document.getElementById("onchange").value;
+        $.ajax({
+            url: "DanhSachDonHang_select",
+            data: { date: d },
+            datatype: "json",
+            type: "POST",
+            success: function (response) {
+                if (response.status != null) {
+                    $(".table-bordered").find("tr:gt(0)").remove();
+
+                    var contentTable = "";
+                    
+                    $.each(response.status, function () {
+                        var damua = "Đã thanh toán";
+                        var rowCount = $('.table_change>tbody >tr').length;
+                        if (this.Damua == false)
+                            damua = "Chưa thanh toán";  
+
+                        contentTable += '<tr id=row_' + this.ID_DONHANG + '><td>' + this.ID_DONHANG + '</td> <td>' + this.ID_NGUOIBAN + '</td> <td>' + this.ID_NGUOIGIAO + '</td> <td>' + this.ID_KHACHHANG + '</td> <td><span id="price">' + formatNumber(this.TONGTIEN, '.', ',') + '</span> VNĐ </td> <td> ' + damua + '  </td> <td id="sua"><a href="ChiTietDonHang?ID_DONHANG=' + this.ID_DONHANG + '" title="Chi tiết"><img src="/Content/image/icon_view.png" /></a></td> </tr> <tr> <td> Hiện có <span>'+rowCount+' </span> đơn hàng</td></tr> ';
+                    });
+                    $('.table_change').append(contentTable);
+                }
+            }
+
+
+        });
+
+        function formatNumber(nStr, decSeperate, groupSeperate) {
+            nStr += '';
+            x = nStr.split(decSeperate);
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
+            }
+            return x1 + x2;
+        }
+
+    }
+
+</script>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="row" style="margin-bottom: 10px;text-align:center;display:block">
+            <span style="font-size:25px">Danh sách đơn hàng</span>
+            <hr style="width: 30%; border: 0.1px solid #000047;" />
+        </div>
+        <div class="row" style="margin-bottom:10px">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <label>Ngày:</label>
+                @Html.TextBox("Date", null, new { @style = "width: 180px;", type = "date", required = "required", @class = "form-control input-feild", onChange = "Selected()", id = "onchange" })
+                <p id="demo"></p>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+            </div>
+        </div>
+        <div class="table-responsive">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã hóa đơn</th>
+                        <th>Mã người bán</th>
+                        <th style="width: 14%;">Mã nhân viên giao hàng</th>
+                        <th>Mã khách hàng</th>
+                        <th>Tổng tiền</th>
+                        <th>Tình trạng</th>
+                        <th colspan="3">Công cụ</th>
+                    </tr>
+                </thead>
+                <tbody class="table_change">
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.ID_DONHANG">
+                            <td>@item.ID_DONHANG</td>
+                            <td>@item.ID_NGUOIBAN</td>
+                            <td>@item.ID_NGUOIGIAO</td>
+                            <td>@item.ID_KHACHHANG</td>
+                            <td><span id="price">@string.Format("{0:0,000}", item.TONGTIEN)</span> VNĐ</td>                   
+                            <td>
+                                @if (item.Damua == true)
+                                {
+                                    <span>Đã thanh toán</span>
+                                }
+                                else
+                                {
+                                <span>Chưa thanh toán</span>
+
+                                }
+                            </td>
+                               
+                            <td id="sua"><a href="@Url.Action("ChiTietDonHang", "DonHang", new { ID_DONHANG = @item.ID_DONHANG })" title="Chi tiết"><img src="/Content/image/icon_view.png" /></a></td>
+                            @*<td id="xoa">@Ajax.ImageActionLink("../../Content/image/icon_xoa.png", "Xóa", "Delete", new { @id = @item.ID_SANPHAM }, new AjaxOptions { Confirm = "Bạn có muốn xóa không?", OnComplete = "$('#row_" + @item.ID_SANPHAM + "').remove()", HttpMethod = "DELETE" })</td>*@
+                        </tr>
+                        <tr> <td> Hiện có <span>@ViewBag.TongHD </span> đơn hàng</td></tr>
+                    }
+                </tbody>
+            </table>
+            @*<div class="soluong">
+                Hiện có <span>@ViewBag.TongHD</span> đơn hàng
+            </div>*@
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,176 @@
+﻿@using DA_Web.Models
+@model List<GioHang>
+    @{
+    ViewBag.Title = "DatHang";
+    Layout = "~/Views/Shared/_layout_display.cshtml";
+    }
+    <style>
+        .header__cart {
+            visibility: hidden;
+        }
+    </style>
+<link href="~/Content/css/delete_top.css" rel="stylesheet" />
+
+    <section class="main-content-section">
+        <div class="">
+            <div class="row" style="margin:0">
+                @{
+                    Table_KHACHHANG kh = (Table_KHACHHANG)Session["User"];
+                }
+
+                <div class="info-cus">
+                    <div class="header-title">
+                        THÔNG TIN KHÁCH HÀNG
+                        <hr />
+                    </div>
+                    <div class="content">
+                        <ul>
+                            <li><span class="address_name">Họ tên:<strong> @kh.HoTen</strong> </span></li>
+                            <li><span class="address_address1">Địa chỉ: <strong> @kh.DiaChi</strong> </span></li>
+                            <li><span class="address_address2">Điện thoại: <strong> @kh.SDT</strong> </span></li>
+                            <li><span class="address_address2">Ngày đặt: <strong>@String.Format("{0:dd/MM/yyyy}", DateTime.Now) </strong> </span></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+             
+
+
+            </div>
+
+
+
+
+
+          <div class="header-title">
+            DANH SÁCH SẢN PHẨM ĐẶT HÀNG
+              <hr />
+          </div>
+            <div class="row" style="margin:0;width:100%">
+                <div class="col-lg-12" style="padding-right:0">
+                    <div class="shoping__cart__table">
+                        <table class="tb_dathang">
+
+                            @foreach (var item in Model)
+                            {
+                                <tbody>
+
+                                    <tr>
+                                        <td class="img-sp">
+                                            <a href="@Url.Action("ChiTietSanPham", "Display", new {id = item.sID_SANPHAM })"><img alt="@item.sTenSanPham" src="@item.sHinhAnh"></a>
+                                        </td>
+                                        <td class="chitiet-sp">
+                                            <div style="width:100%">
+                                                <div class="row dongTenSP">
+                                                    <p><a href="@Url.Action("ChiTietSanPham", "Display", new {id = item.sID_SANPHAM })">@item.sTenSanPham</a></p>
+
+                                                </div>
+                                               
+                                                    <div class="row shoping__cart__quantity" style="width:100%">
+                                                        
+                                                               
+                                                             Số lượng:<span style="color:red"> @item.sSoLuong</span>
+                                                                
+                                                         
+                                                    </div>
+                                                    <div class="row dongGia">
+
+                                                        <div class="left-gia" style="color:red">
+
+                                                           @String.Format("{0:0,0}", @item.sDonGia) VNĐ
+                                                        </div>
+
+
+
+                                                    </div>
+                                                <div class="note">
+                                                    @*<i class="fa fa-comment"></i>*@
+                                                   Ghi chú: @item.GHICHU  @*onchange="changeText(@item.sID_SANPHAM)"*@
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        @*<td id="shoping__cart__total_@item.sID_SANPHAM" class="cart-thanhtien">
+                                        @String.Format("{0:0,0}", item.sThanhTien) VNĐ
+                                    </td>*@
+                                       
+
+
+                                </tbody>
+                            }
+                        </table>
+                        <div class="tottal-cart">
+                            Tổng tiền: <strong>@String.Format("{0:0,0}", ViewBag.TongTien) VNĐ</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <!-- RETURNE-CONTINUE-SHOP START -->
+                    <div class="returne-continue-shop">
+
+                        <a onclick="checkOut()" class="primary-btn" id="mylink">Đặt hàng<i class="fa fa-chevron-right"></i></a>
+                        <br />
+                        <br />
+
+                        @if (ViewBag.Error != null)
+                        {
+                            <script type="text/javascript">
+                                    window.onload = function () {
+                                        alert("Đặt hàng thât bại !!! \n @Html.Raw(ViewBag.Error)");
+                                        location.href = '/GioHang/GioHang';
+                                    };
+                            </script>
+                        }
+
+                    </div>
+
+                    <!-- RETURNE-CONTINUE-SHOP END -->
+                </div>
+            </div>
+           
+          
+          
+
+        </div>
+        
+    </section>
+<div class="back-page">
+    <button onclick="goBack()" class="back-button"><i class="fa fa-arrow-left"></i> </button>   <span style="margin-left:5px">Đơn đặt hàng</span>
+</div>
+
+<script>
+
+    function checkOut() {
+        $.ajax({
+            url: "/GioHang/DatHang",
+
+            datatype: "json",
+            type: "POST",
+            success: function () {
+                swal({
+                    title: "Đặt hàng thành công",
+                    text: "Cửa hàng chúng tôi sẽ liên hệ với quý khách trong thời gian sớm nhất. Chân thành cảm ơn",
+                    icon: "success",
+                    timer: 3000,
+                    showConfirmButton: false
+
+                }).then(function () {
+                    window.location = "/Display/TrangChu";
+                });
+
+
+            }
+        });
+    };
+    $('.swal-button').click(function () {
+        location.href = "/Display/TrangChu";
+    });
+</script>
+
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+﻿<ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            <a href="@Url.Action("Hunter", "ThuongHieu", new {id = @item.TENLOAISANPHAM })">@item.TENLOAISANPHAM</a>
+            @Html.Action("MenuChildMobile", "Display", new { root = @item.ID_LOAISANPHAM })
+        </li>
+    }
+</ul>
+
+
+

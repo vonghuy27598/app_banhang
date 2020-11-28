@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "DatHangThanhCong";
+    Layout = "~/Views/Shared/_layout_display.cshtml";
+}
+<style>
+    .content-success {
+        text-align: center;
+        font-size: 20px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        color: #ef5004;
+    }
+
+    .back-home {
+        float: right;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .back {
+        color: black;
+    }
+
+    .mid {
+        background-color: white;
+    }
+</style>
+
+
+<section class="main-content-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <!-- BSTORE-BREADCRUMB START -->
+                <div class="bstore-breadcrumb">
+                    <a style="color:black; " href="@Url.Action("TrangChu","Display")">Home</a>
+                    <span><i class="fa fa-caret-right"></i></span>
+                    <span>Thông tin đặt hàng</span>
+                </div>
+                <!-- BSTORE-BREADCRUMB END -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <!-- SHOPPING-CART SUMMARY START -->
+                <h2 class="page-title">Xác nhận đơn hàng <span class="shop-pro-item"></span></h2>
+                <!-- SHOPPING-CART SUMMARY END -->
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <!-- CART TABLE_BLOCK START -->
+                <div class="content-success">
+                    <p> Đơn hàng của quý khách đã gửi thành công. Cửa hàng chúng tôi sẽ liên hệ với quý khách trong thời gian sớm nhất</p>
+                    <p> Cảm ơn quý khách đã tin dùng sản phẩm của cửa hàng chúng tôi</p>
+                    <p>Chúc quý khách có một ngày tốt lành</p>
+                </div>
+                <div class="back-home">
+                    <a href="@Url.Action("Trangchu","Display")" class="primary-btn"><i class="fa fa-chevron-left"></i>Về trang chủ</a>
+                </div>
+                <!-- CART TABLE_BLOCK END -->
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+

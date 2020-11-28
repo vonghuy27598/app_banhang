@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "SettingMe";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+
+<link href="~/Content/admin/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="~/Content/css/me.css" rel="stylesheet" />
+<style>
+
+</style>
+
+<div class="mid" style="margin-top:90px">
+    <nav>
+        <ul class="list-inline">
+
+            <li><a class="primary-btn cart-btn" href="@Url.Action("DoiMK", "Pass")"><i class="fa fa-history"></i>Đổi mật khẩu</a></li>
+          
+            <li><a class="primary-btn cart-btn" href="@Url.Action("DangXuat","NhanVien")"> <i class="fa fa-sign-out"></i> Đăng xuất</a></li>
+        </ul>
+    </nav>
+    <div class="back-page">
+        <div class="ct_left" style="display:contents;width: 10%;">
+            <button onclick="goBack()" class="back-button"><i class="fa fa-arrow-left"></i> </button> Thiết lập
+        </div>
+
+    </div>
+</div>
+
+@*<script src="~/Scripts/controller/mobile.js"></script>*@

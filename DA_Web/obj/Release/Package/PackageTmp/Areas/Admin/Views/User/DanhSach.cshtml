@@ -1,0 +1,111 @@
+﻿    @model IEnumerable<DA_Web.ViewModel.NhanVien>
+@{
+    ViewBag.Title = "DanhSach";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    @{if (ViewBag.LoaiNV != null && ViewBag.LoaiNV == "Nhân viên")
+    {
+        <h1 class="h3 mb-2 text-gray-800">DANH SÁCH NHÂN VIÊN</h1>
+    }
+
+    else
+    {
+        <h1 class="h3 mb-2 text-gray-800">DANH SÁCH CỘNG TÁC VIÊN</h1>
+    }
+    }
+    <p class="mb-4"></p>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+            @{if (ViewBag.LoaiNV != null && ViewBag.LoaiNV == "Nhân viên")
+            {
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        @Html.DropDownList("dropdownlist_loainv", (IEnumerable<SelectListItem>)ViewBag.getLoaiNV,"---Chọn chức vụ---", new { @id = "dropdownlist_loainv" })
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <a href="@Url.Action("CreateNhanVien", "User", new {@id_loainv = 0 })" style="float:right;color:red;text-decoration:none;font-weight:bold">Thêm mới nhân viên</a>
+                    </div>
+                </div>
+            }
+
+            else
+            {
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <a href="@Url.Action("CreateNhanVien", "User", new { @id_loainv = 1 })" style="float:right;color:red;text-decoration:none;font-weight:bold">Thêm mới cộng tác viên</a>
+                    </div>
+                </div>
+            }
+            }
+            <div style="text-align:center;margin-bottom:20px">
+                <input id="myInput" type="text" placeholder="Tìm kiếm.." style="width:350px">
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            @{
+                              if (ViewBag.LoaiNV != null && ViewBag.LoaiNV == "Nhân viên")
+                                {
+                                    <th>Mã nhân viên</th>
+                                }
+                              else
+                                {
+                                    <th>Mã CTV</th>
+                                }
+                            }
+                            <th>Họ tên</th>
+                                <th>Số điện thoại</th>
+                                <th>Chức vụ</th>
+                                <th colspan="2">Công cụ</th>
+                            </tr>
+                        </thead>
+                    <tbody class="table_change" id="myTable">
+                        @foreach (var item in Model)
+                        {
+                            <tr id="row_@item.ID_NHANVIEN">
+                                <td>@item.ID_NHANVIEN</td>
+                                <td>@item.HoTen</td>
+                                <td>@item.SDT</td>
+                                <td>@item.Tenloainhanvien</td>
+                                <td id="sua" style="text-align:center"><a href="@Url.Action("ThongTinNhanVien", "User", new { id_nv = @item.ID_NHANVIEN })" title="Xem chi tiết"><img src="/Content/image/icon_view.png" /></a></td>
+                                <td id="xoa" style="text-align:center">@Ajax.ImageActionLink("../../Content/image/icon_xoa.png", "Xóa", "Delete", new { @id = @item.ID_NHANVIEN }, new AjaxOptions { Confirm = "Bạn có muốn xóa nhân viên " + @item.HoTen + " không?", OnComplete = "$('#row_" + @item.ID_NHANVIEN + "').remove()", HttpMethod = "DELETE" })</td>
+
+                            </tr>
+                        }
+
+
+                    </tbody>
+
+                            </table>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-5">
+                                        @*<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite" style="padding-left: 30px;
+                                            font-size: 20px">Trang@(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</div>*@
+                                    </div>
+                                    <div class="col-sm-12 col-md-7">
+                                        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+
+                                            @*@Html.PagedListPager(Model, page => Url.Action("ThongTin", new { page = page }))*@
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>

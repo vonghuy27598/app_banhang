@@ -1,0 +1,105 @@
+﻿@using DA_Web.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<DA_Web.ViewModel.Product_Full>
+
+
+@{
+    ViewBag.Title = "Hunter";
+    Layout = "~/Views/Shared/_layout_display.cshtml";
+}
+<link href="~/Content/css/delete_top.css" rel="stylesheet" />
+<script src="~/Scripts/controller/scroll_navbarHeader.js"></script>
+<!-- Breadcrumb Section Begin -->
+
+<section class="breadcrumb-section set-bg" data-setbg="/Content/img/banner/index.jpg" style="margin-top:50px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Cửa hàng</h2>
+                    <div class="breadcrumb__option">
+                        <a href="@Url.Action("TrangChu","Display")">Home</a>
+                        <span>@{if(ViewBag.thuonghieu!=null){ @ViewBag.thuonghieu}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+
+<div class="container style="margin:auto;">
+    <div class="filter__item">
+        <div class="row">
+            <div class="col-lg-4 col-md-5">
+                <div class="filter__sort">
+                    <span>Sắp xếp</span>
+                    @{
+                        string a = HttpContext.Current.Request.Url.AbsolutePath.ToString();
+                    }
+                    @Html.DropDownList("dropdownlist", (IEnumerable<SelectListItem>)ViewBag.listsort, "---------- Sắp xếp theo ----------", new { @id = "productShort", onchange = "document.location.href ='" + a + "?sort='+ this.options[this.selectedIndex].value;" })
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3">
+                <div class="filter__option">
+
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="filter__found">
+                    <h6> Tổng cộng <span>@ViewBag.soluong</span> sản phẩm</h6>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <div class="row featured__filter">
+       @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-3 col-sm-3 showdm bg-item">
+                <div class="featured__item">
+
+                    <div class="featured__item__pic set-bg item ">
+                        <a href="@Url.Action("ChiTietSanPham", "Display", new { id = item.ID_SANPHAM })"><img style="border-radius: 10px 10px;" src="@item.HINHANH" alt="product-image" class="featured__item__pic set-bg" /></a>
+                        @*<ul class="featured__item__pic__hover">
+                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                            <li class="add-to-cart"><a onclick="AddCart(@item.ID_SANPHAM)"><i class="fa fa-shopping-cart add-to-cart"></i></a></li>
+                        </ul>*@
+                    </div>
+                    <div class="featured__item__text">
+                        <h6><a href="@Url.Action("ChiTietSanPham", "Display", new { id = item.ID_SANPHAM })">@item.TenSanPham</a></h6>
+                        <h5><span class="price">@string.Format("{0:0,000}", item.DonGia) VNĐ</span></h5>
+                    </div>
+
+
+                </div>
+            </div>
+        }
+    </div> 
+    <div class="product__pagination">
+        <div class="phantrang" style="padding-left:10%;margin-bottom:50px">
+            @{
+                string s = Request.QueryString["sort"];
+            }
+            @Html.PagedListPager(Model, page => Url.Action("Hunter", new { sort = s, page = page }))
+        </div> 
+    </div>
+</div>
+
+
+<div class="back-page">
+    <div class="ct_left" style="display:contents;width: 15%;">
+        <button onclick="goBackHome()" class="back-button"><i class="fa fa-arrow-left"></i> </button>
+    </div>
+    <div class="header__cart ct_right" id="header__cart" style="padding: 0;display: inline-block;width: 80%;">
+        <ul>
+            @Html.Action("ttGioHangpart", "GioHang")
+        </ul>
+    </div>
+
+</div>
+
+

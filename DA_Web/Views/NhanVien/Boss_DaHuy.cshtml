@@ -1,0 +1,96 @@
+﻿@model IEnumerable<DA_Web.ViewModel.HoaDonGiaoHang>
+@{
+    ViewBag.Title = "ChietKhauNgay";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+<link href="~/Content/css/delete_top.css" rel="stylesheet" />
+<style>
+    .nice-select .option {
+        padding-left: 15px;
+        padding-right: 5px;
+    }
+
+    .nice-select.open .list {
+        width: 100%;
+    }
+
+    .nice-select {
+        width: 100%;
+    }
+
+    .send-report {
+        width: 100%;
+        background: #000;
+        color: #fff;
+        text-align: center;
+        line-height: 35px;
+        font-size: 15px;
+    }
+
+    .show_dh img {
+        width: 30px;
+    }
+</style>
+<div class="ctn">
+    <h3>Đơn giao hàng đã hủy</h3>
+    <hr />
+    <table width="100%" cellpadding="3" cellspacing="0" border="1" style="text-align:center;margin-top:15px" id="tblParticipantList" class="show_dh">
+        <thead style="font-size:0.9em">
+            <tr>
+                <th>
+                    Mã ĐH
+                </th>
+                <th>
+                    Tên KH
+                </th>
+                <th>
+                    Số ĐT
+                </th>
+                <th>
+                    Địa chỉ
+                </th>
+                <th>
+                    Tổng tiền
+                </th>
+                <th>
+                    Lý do
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="row_@item.ID_DONHANG">
+                    <td>
+                        @item.ID_DONHANG
+                    </td>
+                    <td>
+                        @item.TENKH
+                    </td>
+                    <td>
+                        @item.SDT
+                    </td>
+                    <td>
+                        @item.DIACHI
+                    </td>
+                    <td>
+                        <span id="price">@string.Format("{0:0,000}", item.TongTien)</span> VNĐ
+                    </td>
+                    <td>
+                        <img src="/Content/image/icon_note.png" width="90%" height="auto" onclick="openNote_GC(@item.ID_DONHANG)" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="back-page" style="font-size: 20px">
+        <button onclick="goBack()" class="back-button"><i class="fa fa-arrow-left"></i> </button>   <span style="margin-left:5px">Quay lại</span>
+    </div>
+</div>
+
+<script>
+
+    function checkTinhTrang(obj) {
+
+    }
+</script>

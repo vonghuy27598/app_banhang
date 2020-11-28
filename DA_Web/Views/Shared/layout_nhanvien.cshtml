@@ -1,0 +1,156 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>Khu vực nhân viên</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/style.css" type="text/css">
+    <link href="~/Content/css/dangnhap.css" rel="stylesheet" />
+    <link href="~/Content/css/dathang.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/owlcarousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/owlcarousel/assets/owl.theme.default.min.css">
+    <link href="~/Content/css/goBack.css" rel="stylesheet" />
+    <link href="~/Content/css/khuvucnhanviencss.css" rel="stylesheet" />
+    <script src="~/Scripts/js/vendor/jquery-1.11.3.min.js"></script>
+
+</head>
+<body>
+    <div class="top">
+        <!-- Page Preloder -->
+        <div id="preloder">
+            <div class="loader"></div>
+        </div>
+
+        <!-- Humberger Begin -->
+        <div class="humberger__menu__overlay"></div>
+
+    </div>
+    <div class="mid">
+        @RenderBody()
+    </div>
+
+ 
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.nice-select.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/jquery.slicknav.js"></script>
+    <script src="~/Scripts/mixitup.min.js"></script>
+    <script src="~/Scripts/owl.carousel.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
+  
+    <!-- jquery js -->
+   
+    <script src="~/Scripts/controller/getDonHang.js"></script>
+
+    <!-- fancybox js -->
+    <script src="~/Scripts/js/jquery.fancybox.js"></script>
+
+    <!-- bxslider js -->
+    <script src="~/Scripts/js/jquery.bxslider.min.js"></script>
+
+    <!-- meanmenu js -->
+    <script src="~/Scripts/js/jquery.meanmenu.js"></script>
+
+    <!-- owl carousel js -->
+    <script src="~/Scripts/js/owl.carousel.min.js"></script>
+
+    <!-- nivo slider js -->
+    <script src="~/Scripts/js/jquery.nivo.slider.js"></script>
+
+    <!-- jqueryui js -->
+    <script src="~/Scripts/js/jqueryui.js"></script>
+
+    <!-- bootstrap js -->
+    <script src="~/Scripts/js/bootstrap.min.js"></script>
+
+    <!-- wow js -->
+    <script src="~/Scripts/js/wow.js"></script>
+
+    <script>
+        new WOW().init();
+    </script>
+    <!-- Google Map js -->
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+   
+    <!-- main js -->
+    <script src="~/Scripts/js/main.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/controller/baseController.js"></script>
+    <script src="~/Scripts/controller/goBack.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    @RenderSection("upload", false)
+
+    <script type="text/javascript">
+        $('#pictureUpload2').click(function () {
+            $('#fileUpload2').trigger('click')
+        });
+        $('#fileUpload2').change(function () {
+            if (window.FormData !== undefined) {
+                var fileUpload2 = $('#fileUpload2').get(0);
+                var files2 = fileUpload2.files;
+
+                var formData2 = new FormData();
+                formData2.append('file', files2[0]);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Display/ProcessUpload',
+                    contentType: false,
+                    processData: false,
+                    data: formData2,
+
+                    success: function (urlImage2) {
+                        $('#btn_Change').prop('disabled', false);
+                        $('#pictureUpload2').attr('src', urlImage2);
+
+                        $('#picture2').val(urlImage2);
+                    },
+                    error: function (err) {
+                        alert('Có lỗi khi upload ảnh: ' + err.statusText);
+                    }
+                });
+            }
+        });
+
+        $('#hoten').change(function () {
+            var hoten = $('#hoten');
+            if (hoten.length == 0) {
+                alert("rỗng")
+            }
+        });
+        $(document).ready(function () {
+            $('#capnhat').prop('disabled', true);
+            $('#btn_Change').prop('disabled', true);
+            $(':input[type="text"]').keyup(function () {
+                if ($(this).val() != '') {
+                    $('#capnhat').prop('disabled', false);
+                } else {
+                    $('#capnhat').prop('disabled', true);
+                }
+            });
+            $('#gioitinh').change(function () {
+                $('#capnhat').prop('disabled', false);
+            });
+        });
+
+
+
+    </script>
+</body>
+</html>

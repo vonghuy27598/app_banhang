@@ -1,0 +1,69 @@
+﻿@model DA_Web.Models.Table_NHANVIEN
+
+<style>
+    .notification {          
+        position: relative;
+        display: inline-block;     
+    }
+
+
+        .notification .badge {
+            position: absolute;
+            top: -3px;
+            right: 5px;
+            padding: 3px 6px;
+            border-radius: 50%;
+            background-color: red;
+            color: white;
+        }
+</style>
+
+
+
+
+@if (Session["User1"] == null || Session["User1"].ToString() == "")
+{
+    <nav>
+        <ul class="list-inline">
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+            <li><a href="@Url.Action("DangNhap","NhanVien")"><i class="fa fa-user"></i>Đăng nhập</a></li>
+        </ul>
+    </nav>
+}
+else
+{
+    <nav>
+        <ul class="list-inline">
+            <li><span>Tài khoản @Model.Username</span></li>
+            
+            <li><a href="@Url.Action("LichSuDatHang", "NhanVien", new {ID_NHANVIEN = @Model.ID_NHANVIEN })">Lịch sử đặt hàng</a></li>
+            @if (Model.ID_LOAINHANVIEN == 2)
+            {
+                <li>
+                    <a href="@Url.Action("DonGiaoHang", "NhanVien", new {ID_NHANVIEN = @Model.ID_NHANVIEN })" class="notification">
+                        <span> Đơn giao hàng</span>
+                        <span class="badge">@ViewBag.Count</span>
+                    </a>
+                </li>
+            }
+            @if (Model.ID_LOAINHANVIEN == 0)
+            {
+                <li>
+                    <a href="@Url.Action("QuanLyDonDatHang", "NhanVien")">
+                        <span>Quản lý đơn đặt hàng</span>
+                       
+                    </a>
+                </li>
+            }
+            <li><a href="@Url.Action("DangXuat","NhanVien")">Đăng xuất</a></li>
+        </ul>
+    </nav>
+}
+
+
+
+
+
+

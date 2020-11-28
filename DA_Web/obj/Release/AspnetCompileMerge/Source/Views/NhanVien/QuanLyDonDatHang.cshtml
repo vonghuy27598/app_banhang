@@ -1,0 +1,316 @@
+﻿@model IEnumerable<DA_Web.ViewModel.HoaDon>
+@{
+    ViewBag.Title = "QuanLyDonDatHang";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+
+<link href="~/Content/css/delete_top.css" rel="stylesheet" />
+<style>
+    .ctn .tb_ql td {
+        font-size: .75em;
+    }
+</style>
+<script type="text/javascript">
+    function all_dh()
+    {
+        location.reload();
+    }
+
+
+
+    function Selected() {
+
+        var d = document.getElementById("onchange").value;
+        $.ajax({
+            url: "QuanLyDonDatHang_select",
+            data: { date: d },
+            datatype: "json",
+            type: "POST",
+            success: function (response) {
+                if (response.status != null) {
+                    $(".tb_ql").find("tr:gt(0)").remove();
+
+                    var contentTable = "";
+
+                    $.each(response.status, function () {
+                        var damua = "Đã thanh toán";
+                        if (this.Damua == false)
+                            damua = "Chưa thanh toán";
+                        var nguoigiao = this.ID_NGUOIGIAO;
+                        if (this.ID_NGUOIGIAO = null)
+                        
+                            nguoigiao = '<a title="Xem" onclick="clickGetNV(' + this.ID_DONHANG + ')"><img src="/Content/img/icon_warning.png" width="40%" height="auto" /></a>';
+
+                        contentTable += '<tr> <td>' + this.ID_DONHANG + '</td> <td>' + this.ID_NGUOIBAN + '</td> <td width="17%" id="id_nvgiaohang_' + this.ID_DONHANG + '">' + nguoigiao + '</td> <td><span id="price">' + formatNumber(this.TONGTIEN, '.', ',') + '</span> VNĐ </td> <td> ' + damua + '  </td> <td id="nhapkho"><a title="Xem" onclick="clickView('+this.ID_DONHANG+')"><img src="/Content/image/icon_view.png" /></a></td>';
+                    });
+                    $('.table_change').append(contentTable);
+                }
+            }
+
+
+        });
+
+        function formatNumber(nStr, decSeperate, groupSeperate) {
+            nStr += '';
+            x = nStr.split(decSeperate);
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
+            }
+            return x1 + x2;
+        }
+
+    }
+
+</script> 
+<div class="ctn">
+    <h3>Quản lý đơn đặt hàng</h3>
+    <hr />
+    <div class="row" style="margin:0;">
+        <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 0;">
+            <label>Ngày:</label>
+            @Html.TextBox("Date", null, new { type = "date", required = "required", @class = "input-feild_date", onChange = "Selected()", id = "onchange" })
+            <span style="float:right;cursor:pointer" onclick="all_dh()">Hiển thị tất cả</span>
+            <p id="demo"></p>
+        </div>
+
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          
+        </div>
+    </div>
+    <table width="100%" cellpadding="3" cellspacing="0" border="1" style="text-align:center" class="tb_ql">
+        <thead style="font-size:0.9em">
+            <tr>
+                <th>
+                    Mã ĐH
+                </th>
+                <th>
+                    Mã người bán
+                </th>
+                <th>
+                    Mã người giao
+                </th>
+                <th>
+                    Tổng tiền
+                </th>
+                <th>
+                    Tình trạng
+                </th>
+                <th>
+                    Công cụ
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table_change">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.ID_DONHANG
+                    </td>
+                    <td>
+                        @item.ID_NGUOIBAN
+                    </td>
+                    <td width="17%" id="id_nvgiaohang_@item.ID_DONHANG">
+                        @if (item.ID_NGUOIGIAO != null)
+                        {
+                            @item.ID_NGUOIGIAO
+                        }
+                        else
+                        {
+                            <a title="Xem" onclick="clickGetNV(@item.ID_DONHANG)"><img src="/Content/img/icon_warning.png" width="40%" height="auto" /></a>
+                        }
+
+                    </td>
+                    <td>
+                        <span id="price">@string.Format("{0:0,000}", item.TONGTIEN)</span> VNĐ
+                    </td>
+                    <td>
+                        @if ((bool)item.Damua)
+                        {
+                            <span>Đã thanh toán</span>
+                        }
+                        else
+                        {
+                            <span>Chưa thanh toán</span>
+                        }
+
+                    </td>
+
+                    <td id="nhapkho"><a title="Xem" onclick="clickView(@item.ID_DONHANG)"><img src="/Content/image/icon_view.png" /></a></td>
+
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+    <div style="margin-top:5vh;text-align:center">
+        <span style="color:#d7cccc"> * Chú ý: lịch sử đơn hàng chỉ hiện 15 đơn gần nhất *</span>
+    </div>
+
+
+
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn" hidden="hidden">Open Modal</button>
+    <button id="myBtn2" hidden="hidden">Open Modal</button>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 style="color:white">CHI TIẾT ĐƠN HÀNG</h4>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+
+                <table width="100%" cellpadding="3" cellspacing="0" border="1" style="text-align:center" class="table-bordered">
+                    <thead style="font-size:0.9em">
+                        <tr>
+                            <th>
+                                Mã SP
+                            </th>
+                            <th>
+                                Hình ảnh
+                            </th>
+                            <th>
+                                Tên SP
+                            </th>
+                            <th>
+                                SL
+                            </th>
+                            <th>
+                                Đơn giá
+                            </th>
+                            <th>
+                                Tình trạng
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table_chitiet"></tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div id="myModal2" class="modal" >
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 >Chọn nhân viên giao hàng</h4>
+                <span hidden="hidden" id="hd_iddh"></span>
+                <span class="close2">&times;</span>
+            </div>
+            <div class="modal-body" style="overflow:hidden">
+              
+                <div class="row">
+                    <div class="left-img">
+                        <img class="img-profile rounded-circle" id="avatar_nv" src="/Content/img/avatar_null.jpg">
+                    </div>
+                    <div class="right-content">
+                        <div class="info-nv">
+                            <div>
+                                <span id="hotenNV">Họ tên:</span>
+                                <span hidden="hidden" id="idnv"></span>
+                            </div>
+                            <div>
+                                <span id="sdtNV">Số điện thoại:</span>
+                            </div>
+                        </div>
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                            <table width="100%" cellspacing="0" border="1" style="text-align: center; border: 1px solid #dee2e6;" class="table-striped mb-0 tb_nv">
+                                <thead style="font-size:0.9em">
+                                    <tr>
+                                        <th>
+                                            Mã NV
+                                        </th>
+                                        <th>
+                                            Họ tên
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table_chitiet_nv">
+                                    @foreach (var item in ViewData["getNV"] as IEnumerable<DA_Web.Models.Table_NHANVIEN>)
+                                    {
+                                        <tr>
+                                            <td onclick="chonNV(@item.ID_NHANVIEN)">@item.ID_NHANVIEN</td>
+                                            <td onclick="chonNV(@item.ID_NHANVIEN)">@item.HoTen</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" >
+                <button type="button" class="btn_save chonnhanvien" onclick="save()">Chọn</button>
+            </div>
+        </div>
+    </div>
+    <div class="back-page" style="font-size: 20px">
+        <button onclick="goBack()" class="back-button"><i class="fa fa-arrow-left"></i> </button>   <span style="margin-left:5px">Quay lại</span>
+    </div>
+</div>
+<script>
+    function chonNV(obj){
+        var id = obj;
+        $.ajax({
+            url: "getInfoNv",
+            data: { ID_NHANVIEN: id },
+            datatype: "json",
+            type: "POST",
+            success: function (response) {
+                if (response.status != null) {
+                    var hinh = response.status.ANHDAIDIEN;
+                    var ten = response.status.HoTen;
+                    var sdt = response.status.SDT;
+                    $.each(response.status, function () {
+                        if(this.ANHDAIDIEN != null){
+                            $('#avatar_nv').attr('src', this.ANHDAIDIEN);
+                        }else{
+                            $('#avatar_nv').attr('src', '/Content/img/avatar_null.jpg');
+                        } 
+                        $('#idnv').text(this.ID_NHANVIEN);
+                        $('#hotenNV').text("Họ tên: "+this.HoTen);
+                        $('#sdtNV').text("Số điện thoại: "+this.SDT);
+                    });                   
+                }
+
+            }
+
+        });     
+    }
+
+    function save() {
+        var idnv = $('#idnv').text();
+        var iddh = $('#hd_iddh').text();
+        $.ajax({
+            url: "setNV_giaohang",
+            data: { ID_NHANVIEN: idnv,ID_DONHANG:iddh},
+            datatype: "json",
+            type: "POST",
+            success: function (response) {
+                if (response.status != null) {                  
+                    $.each(response.status, function () {
+                        $('#id_nvgiaohang_'+iddh).text(this.ID_NHANVIEN);
+                    });
+                }
+
+            }
+
+        });
+
+        document.getElementById("myModal2").style.display = "none";;
+    }
+    
+</script>

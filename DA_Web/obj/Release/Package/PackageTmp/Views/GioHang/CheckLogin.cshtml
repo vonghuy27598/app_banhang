@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "CheckLogin";
+    Layout = "~/Views/Shared/_layout_display.cshtml";
+}
+
+
+<link href="~/Content/css/dangnhap.css" rel="stylesheet" />
+    
+        <div class="row form-dn" style="width:100%;margin:0">
+            <div class="primari-box registered-account dn">
+                @if (Session["User1"] == null)
+                { 
+                <form class="new-account-box" id="accountLogin" method="post" action="#">
+                    <h3 class="box-subheading">Nhập thông tin liên hệ</h3>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.ValidationSummary(true)
+                        <div class="form-content">
+                            <div class="form-group primary-form-group">
+                                <label for="loginemail">Số điện thoại</label>
+                                @Html.TextBox("SODT", null, new { @class = "form-control input-feild", type = "tel", pattern = "[0-9]{10}", maxlength = "10" })
+                             
+                            </div>
+                            <div class="form-group primary-form-group">
+                                <label for="password">Họ & tên</label>
+                                @Html.TextBox("HOTEN", null, new { @class = "form-control input-feild" })
+                               
+                            </div>
+                            <div class="form-group primary-form-group">
+                                <label for="loginemail">Địa chỉ</label>
+                                @Html.TextBox("DIACHI", null, new { @class = "form-control input-feild" })
+
+                            </div>
+                            <div class="forget-password">
+                            </div>
+                            <div>
+                                <h4 style="color:red;text-align:center">@ViewBag.Thongbao</h4>
+                            </div>
+                            <div class="submit-button">
+                                <input type="submit" value="Tiếp tục" id="signinCreate" class="btn main-btn" />
+                            </div>
+                        </div>
+                    }
+                </form>
+                }
+                else
+                {
+                    <form class="new-account-box" id="accountLogin" method="post" action="#">
+                    <h3 class="box-subheading">Nhập thông tin liên hệ</h3>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.ValidationSummary(true)
+                        <div class="form-content">
+                            <div class="form-group primary-form-group">
+                                <label for="loginemail">Số điện thoại</label>
+                                @Html.TextBox("SODT", null, new { @class = "form-control input-feild", type = "tel",pattern="[0-9]{10}", maxlength="10" })
+                                <span class="loi">@ViewData["Loi1"]</span>
+                            </div>
+                            <div class="form-group primary-form-group">
+                                <label for="password">Họ & tên</label>
+                                @Html.TextBox("HOTEN", null, new { @class = "form-control input-feild" })
+                                <span class="loi">@ViewData["Loi2"]</span>
+                            </div>
+                            <div class="form-group primary-form-group">
+                                <label for="password">Địa chỉ</label>
+                                @Html.TextBox("DIACHI", null, new { @class = "form-control input-feild" })
+                                <span class="loi">@ViewData["Loi3"]</span>
+                            </div>
+                            <div class="forget-password">
+                            </div>
+                            <div>
+                                <h4 style="color:red;text-align:center">@ViewBag.Thongbao</h4>
+                            </div>
+                            <div class="submit-button">
+                                <input type="submit" value="Tiếp tục" id="signinCreate" class="btn main-btn" />
+                            </div>
+                        </div>
+                    }
+                </form>
+                }
+                @if (ViewBag.Mess != null)
+                {
+                    <script type="text/javascript">
+                        window.onload = function () {
+                            alert("@Html.Raw(ViewBag.Mess)");
+                           
+                        };
+                    </script>
+                }
+
+
+
+            </div>
+        </div>
+
+<div class="back-page">
+    <button onclick="goBack()" class="back-button"><i class="fa fa-arrow-left"></i> </button>   <span style="margin-left:5px">Nhập thông tin</span>
+</div>
+

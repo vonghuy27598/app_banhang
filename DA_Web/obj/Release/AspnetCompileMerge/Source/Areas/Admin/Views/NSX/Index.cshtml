@@ -1,0 +1,52 @@
+﻿@model IEnumerable<DA_Web.ViewModel.NhaSX>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+
+<link href="~/Content/admin/css/adminTable.css" rel="stylesheet" />
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="row" style="margin-bottom: 10px;text-align:center;display:block">
+            <span style="font-size:25px">Danh mục nhà sản xuất</span>
+            <hr style="width: 30%; border: 0.1px solid #00000047;" />
+        </div>
+        <div class="row" style="margin-bottom:10px">
+            <div style="width:100%" class="new">
+
+                <a href="@Url.Action("CreateNSX", "NSX") " style="float:right;color:red;text-decoration:none;font-weight:bold">Thêm mới nhà sản xuất</a>
+
+
+            </div>
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã NSX</th>
+                        <th>Tên NSX</th>
+                        <th>Địa chỉ</th>
+                        <th colspan="2">Công cụ</th>
+                    </tr>
+                </thead>
+                <tbody class="table_change">
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.ID_NSX">
+                            <td>@item.ID_NSX</td>
+                            <td>@item.NHASX</td>
+                            <td>@item.NoiSX</td>
+                            <td id="sua"><a href="@Url.Action("EditNSX", "NSX", new { id = @item.ID_NSX })" title="Sửa"><img src="/Content/image/icon_sua.png" /></a></td>
+                            <td id="xoa">@Ajax.ImageActionLink("../../Content/image/icon_xoa.png", "Xóa", "Delete", new { @id = @item.ID_NSX }, new AjaxOptions { Confirm = "Bạn có muốn xóa không?", OnComplete = "$('#row_" + @item.ID_NSX + "').remove()", HttpMethod = "DELETE" })</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

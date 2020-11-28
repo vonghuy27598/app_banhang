@@ -1,0 +1,27 @@
+﻿@model IEnumerable<DA_Web.ViewModel.MenuView>
+
+@if ((int)ViewBag.Count > 0)
+{
+
+
+           <!-- DRODOWN-MEGA-MENU START -->
+    <div class="drodown-mega-menu">
+        <div class="left-mega col-xs-6">
+            <div class="mega-menu-list">
+
+                <ul>
+                    @foreach (var item in Model)
+                    {
+                        <li><a href="@Url.Action("Hunter", "ThuongHieu", new {id = @item.TENLOAISANPHAM })">@item.TENLOAISANPHAM</a></li>
+                        @Html.Action("MenuChild", "Display", new { root = @item.ID_LOAISANPHAM })
+                    }
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+                                    <!-- DRODOWN-MEGA-MENU END -->
+
+}
+

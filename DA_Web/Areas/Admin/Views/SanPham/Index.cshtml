@@ -1,0 +1,89 @@
+﻿@model IEnumerable<DA_Web.ViewModel.Product_Full>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="row" style="margin-bottom: 10px;text-align:center;display:block">
+            <span style="font-size:25px">Danh sách sản phẩm</span>
+            <hr style="width: 30%; border: 0.1px solid #00000047;" />
+        </div>
+        <div class="row" style="margin-bottom:10px">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+
+                @Html.DropDownList("dropdownlist", (IEnumerable<SelectListItem>)ViewBag.LoaiCon, "-----Chọn danh mục------", new { @id = "dropdownlist" })
+
+
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+
+                <a href="@Url.Action("CreateSP", "SanPham", new {ID_LOAISANPHAM =(int) ViewBag.ID_LOAISP })" style="float:right;color:red;text-decoration:none;font-weight:bold">Thêm mới sản phẩm</a>
+
+
+            </div>
+        </div>
+        <div style="text-align:center;margin-bottom:20px">
+            <input id="myInput" type="text" placeholder="Tìm kiếm.." style="width:350px">
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Ưu tiên</th>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Đơn giá</th>
+                        <th>Chiết khấu</th>
+                        <th>Nhà sản xuất</th>
+                        <th>Hoạt động</th>
+                        <th colspan="4">Công cụ</th>
+                    </tr>
+                </thead>
+                <tbody class="table_change" id="myTable">
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.ID_SANPHAM">
+                            <td>
+                                @if (item.UuTien == true)
+                                {
+                                    <input type="checkbox" name="check" class="checkN" id="checkUT" checked="checked" disabled="disabled" data-id="" /> <span>Ưu tiên</span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" name="check" class="checkN" id="checkUT" disabled="disabled" data-id="" /> <span>Ưu tiên</span>
+
+                                }
+                            </td>
+                            <td>@item.ID_SANPHAM</td>
+                            <td>@item.TenSanPham</td>
+                            <td><span id="price">@string.Format("{0:0,000}", item.DonGia)</span> VNĐ</td>
+                            <td>@item.ChietKhau</td>
+                            <td>@item.NhaSX</td>
+                            <td>
+                                @if (item.Ngung == true)
+                                {
+                                    <input type="checkbox" name="check" class="checkN" id="checkNgung" checked="checked" disabled="disabled" data-id="" /> <span>Ngưng</span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" name="check" class="checkN" id="checkNgung" disabled="disabled" data-id="" /> <span>Ngưng</span>
+
+                                }
+                            </td>
+                            <td id="nhapkho"><a href="@Url.Action("QuanLyTuyChon", "NhapKho", new { id= @item.ID_SANPHAM })" title="Quản lý tùy chọn"><img src="/Content/image/ic_add.png" /></a></td>
+                            <td id="sua"><a href="@Url.Action("EditSP", "SanPham", new { id= @item.ID_SANPHAM })" title="Sửa"><img src="/Content/image/icon_sua.png" /></a></td>
+                            <td id="xoa">@Ajax.ImageActionLink("../../Content/image/icon_xoa.png", "Xóa", "Delete", new { @id = @item.ID_SANPHAM }, new AjaxOptions { Confirm = "Bạn có muốn xóa không?", OnComplete = "$('#row_" + @item.ID_SANPHAM + "').remove()", HttpMethod = "DELETE" })</td>
+                            <td id="quanlyhinhanh"><a href="@Url.Action("QuanLyHinhAnh", "SanPham", new { ID_SANPHAM = @item.ID_SANPHAM })" title="Quản lý hình ảnh"><img src="/Content/image/img.png" /></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>

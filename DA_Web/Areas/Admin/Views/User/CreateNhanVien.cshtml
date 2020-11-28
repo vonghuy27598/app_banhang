@@ -1,0 +1,235 @@
+﻿@model DA_Web.ViewModel.NhanVien
+
+@{
+    ViewBag.Title = "CreateNhanVien";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+
+<style>
+  
+</style>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @{if (ViewBag.LoaiNV != null && ViewBag.LoaiNV == "Nhân viên")
+                {
+                    <h4>THÊM MỚI NHÂN VIÊN</h4>
+                }
+                else
+                {
+                    <h4>THÊM MỚI CỘNG TÁC VIÊN</h4>
+                }
+                }
+                <hr />
+                @Html.ValidationSummary(true)
+
+
+                <fieldset>
+                    <span>Ảnh đại diện</span>
+                    <div class="row" style="padding-left: 10px;margin-top:10px">
+
+                        <div class="col-md-3 col-sm-3 img">
+
+                            <img id="pictureUpload" src="/Content/img/avatar_null.jpg" width="100%" height="100%" />
+
+                        </div>
+                        <div class="col-md-9 col-sm-9 ">
+                            <div class="content" style="width: 100%; margin: auto; padding-left: 50px;">
+
+
+                                <div class="form-group">
+                                    <div class="row">
+
+                                        <div class="col-md-4 text">
+                                            @Html.LabelFor(m => m.HoTen, new { @class = "control-label col-md-12" })
+                                            @Html.TextBoxFor(model => model.HoTen)
+                                            @Html.ValidationMessageFor(model => model.HoTen)
+                                        </div>
+
+                                        <div class="col-md-4 text">
+                                            @Html.LabelFor(m => m.SDT, new { @class = "control-label col-md-12" })
+                                            @Html.TextBoxFor(model => model.SDT, new { maxlength = "10" })
+                                            @Html.ValidationMessageFor(model => model.SDT)
+                                        </div>
+                                        <div class="col-md-4 text">
+                                            @Html.LabelFor(m => m.Username, new { @class = "control-label col-md-12" })
+                                            @Html.TextBoxFor(model => model.Username, new { minlength = "8" })
+                                            @Html.ValidationMessageFor(model => model.Username)
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="row">
+
+                                        <div class="col-md-4 text">
+                                            @Html.LabelFor(m => m.Diachi, new { @class = "control-label col-md-12" })
+                                            @Html.EditorFor(model => model.Diachi)
+                                             @Html.ValidationMessageFor(model => model.Diachi)
+                                        </div>
+
+                                        <div class="col-md-4 text">
+                                            @Html.LabelFor(m => m.TKBank, new { @class = "control-label col-md-12" })
+                                            @Html.EditorFor(model => model.TKBank, new { @class = "input-chitiet", maxlength = "16" })
+
+                                            @Html.ValidationMessageFor(model => model.TKBank)
+                                        </div>
+                                        <div class="col-md-4 text">
+                                            @Html.LabelFor(m => m.Password, new { @class = "control-label col-md-12" })
+                                            @Html.PasswordFor(model => model.Password, new { minlength = "8"})
+                                            @Html.ValidationMessageFor(model => model.Password)
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="row">
+
+                                        <div class="col-md-4 text">
+                                            @Html.LabelFor(m => m.Email, new { @class = "control-label col-md-12" })
+                                            @Html.EditorFor(model => model.Email)
+                                           @Html.ValidationMessageFor(model => model.Email)
+                                        </div>
+
+                                        <div class="col-md-4 text">
+                                            @Html.LabelFor(m => m.Skype, new { @class = "control-label col-md-12" })
+                                            @Html.EditorFor(model => model.Skype)
+                                            @Html.ValidationMessageFor(model => model.Skype)
+
+                                        </div>
+                                        <div class="col-md-4 text">
+                                            @Html.Label("Nhập lại mật khẩu", new { @class = "control-label col-md-12" })
+                                            @Html.Password("confirm_password")
+                                            @Html.ValidationMessage("confirm_password")
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+
+                                        <div class="col-md-4 ">
+
+                                            @Html.LabelFor(m => m.ANHDAIDIEN, new { @class = "control-label col-md-12" })
+                                            @Html.TextBoxFor(model => model.ANHDAIDIEN, new { @name = "picture", @id = "picture", @readonly = "readonly" })
+
+                                            <input type="file" id="fileUpload" name="fileUpload" style="display:none" />
+                                            <input type="button" value="..." id="btnUpload" />
+                                              @Html.ValidationMessageFor(model => model.ANHDAIDIEN)
+                                        </div>
+
+                                        <div class="col-md-4 ">
+                                            @if (ViewBag.LoaiNV == "Nhân viên")
+                                            {
+                                                @Html.LabelFor(m => m.ID_LOAINHANVIEN, new { @class = "control-label col-md-12" })
+
+                                                <span> @Html.DropDownListFor(model => model.ID_LOAINHANVIEN, (IEnumerable<SelectListItem>)ViewBag.getLoaiNV, "---Chọn theo chức vụ---")</span>
+                                             @Html.ValidationMessageFor(model => model.ID_LOAINHANVIEN)
+                                            }
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+
+                                        <div class="col-md-6 ">
+
+                                            @Html.LabelFor(m => m.GioiTinh, new { @class = "control-label col-md-12" })
+                                            @Html.RadioButtonFor(m => m.GioiTinh, "True", new { @checked = "true" }) Nam
+                                            @Html.RadioButtonFor(m => m.GioiTinh, "False") Nữ
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+
+                                @*-----------------*@
+
+                                <div class="form-group" style="margin-top:35px">
+                                    <div class="col-md-offset-2 col-md-10" style="text-align:center;">
+                                        <input type="submit" value="Thêm mới nhân viên" class="btn btn-success" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
+        }
+    </div>
+</div>
+@section upload
+{
+    <script>
+        $(function () {
+
+            $('#btnUpload').click(function () {
+                $('#fileUpload').trigger('click');
+            });
+            $('#fileUpload').change(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $('#fileUpload').get(0);
+                    var files = fileUpload.files;
+
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Admin/SanPham/ProcessUpload',
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+
+                        success: function (urlImage) {
+                            $('#pictureUpload').attr('src', urlImage);
+                            $('#picture').val(urlImage);
+                        },
+                        error: function (err) {
+                            alert('Có lỗi khi upload ảnh: ' + err.statusText);
+                        }
+                    });
+                }
+            });
+        });
+
+
+    </script>
+<script>
+    var password = document.getElementById("Password")
+  , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Nhập lại mật khẩu không đúng");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+</script>
+}
+
+
+
+
+
+

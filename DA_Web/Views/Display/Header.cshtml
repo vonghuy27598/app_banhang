@@ -1,0 +1,201 @@
+﻿@model IEnumerable<DA_Web.ViewModel.MenuView>
+
+<style>
+    #txtKeyword {
+        width: 45px;
+        height: 45px;
+        border-radius: 30px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+        background-image: url('../../Content/image/searchicon.png');
+        background-repeat: no-repeat;
+        background-position: 10px 10px;
+    }
+
+        /* When the input field gets focus, change its width to 100% */
+        #txtKeyword:focus {
+            width: 200%;
+        }
+</style>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Humberger Begin -->
+<div class="humberger__menu__overlay"></div>
+<div class="humberger__menu__wrapper">
+    @*<div class="humberger__menu__logo">
+            <a href="#"><img src="/Content/image/logo/logo_black.png" alt=""></a>
+        </div>*@
+
+    <div class="humberger__menu__widget">
+
+        <div class="header__top__right__auth">
+            @Html.Action("ttDangNhappart", "NhanVien")
+        </div>
+    </div>
+    <nav class="humberger__menu__nav mobile-menu">
+        <ul>
+            <li class="active"><a href="@Url.Action("TrangChu","Display")">Trang chủ</a></li>
+            <li>
+                <a href="#">Pages</a>
+                <ul class="header__menu__dropdown">
+                    <li><a href="@Url.Action("GioHang", "GioHang")">Giỏ hàng</a></li>
+                    <li><a href="@Url.Action("CheckLogin","GioHang")">Đặt hàng</a></li>
+                    <li><a href="@Url.Action("Me","Display")">Tôi</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="mobile-menu-wrap"></div>
+    @*<div class="header__top__right__social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+        </div>*@
+    <div class="humberger__menu__contact">
+        <ul>
+            @*<li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                <li>Free Shipping for all Order of $99</li>*@
+        </ul>
+    </div>
+</div>
+
+
+<!-- Header Section Begin -->
+<header class="header" id="header__top">
+    <div class="header__top">
+        <div class="container scroll">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="header__top__left">
+                        <ul>
+                            @*<li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                                <li>Free Shipping for all Order of $99</li>*@
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="header__top__right">
+                        <div class="header__top__right__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                        </div>
+                        @*<div class="header__top__right__language">
+                                <img src="img/language.png" alt="">
+                                <div>English</div>
+                                <span class="arrow_carrot-down"></span>
+                                <ul>
+                                    <li><a href="#">Spanis</a></li>
+                                    <li><a href="#">English</a></li>
+                                </ul>
+                            </div>*@
+                        <div class="header__top__right__auth">
+                            @Html.Action("ttDangNhappart", "NhanVien")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="content_tainer">
+        <div id="navbar">
+            <div class="row">
+                @*<div class="col-lg-3 left-menu">
+                        <div class="header__logo" id="logo">
+                            <a href="@Url.Action("TrangChu","Display")"><img src="/Content/image/logo/logo_black.png" alt="" id="img_logo"></a>
+                        </div>
+                    </div>*@
+                <div class="col-lg-6 mid-menu">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="@Url.Action("TrangChu","Display")">Trang chủ</a></li>
+                            <li>
+                                <a href="#">Pages</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a href="@Url.Action("GioHang", "GioHang")">Giỏ hàng</a></li>
+                                    <li><a href="@Url.Action("CheckLogin","GioHang")">Đặt hàng</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-1 right-menu" id="right-menu">
+                    <div class="header__cart" id="header__cart">
+                        <ul>
+                            @Html.Action("ttGioHangpart", "GioHang")
+                        </ul>
+                    </div>
+                </div>
+                <div id="search" style="padding: 15px 15px 15px 0px; width: 43%" class="hero__search__form">
+                    <form id="form" action="/Display/TimKiem" method="get" class="search-form-cat">
+                        <input type="text" id="txtKeyword" class="form-control search-form" name="keyword" required />
+                        <button hidden="hidden" class="site-btn" value="Search" name="s" type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+
+                <div class="col-lg-3 left-menu" id="logo1">
+                    <div class="header__logo" id="logo">
+                        <a href="@Url.Action("TrangChu","Display")"><img src="/Content/image/logo/logo_black.png" alt="" id="img_logo"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+<!-- Hero Section Begin -->
+<section class="hero hero-normal">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>Tất cả sản phẩm</span>
+                    </div>
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            <li>
+                                <a href="@Url.Action("Hunter", "ThuongHieu", new {id = @item.TENLOAISANPHAM })">@item.TENLOAISANPHAM</a>
+
+
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            @*<div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form action="/Display/TimKiem" method="get" class="search-form-cat">
+                                <input type="text" id="txtKeyword" class="form-control search-form" name="keyword" placeholder="Nhập sản phẩm tại đây ... " required />
+                                <butto  class="site-btn" value="Search" name="s" type="submit"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+<!--js-->
+<script>
+    $(document).ready(function () {
+        $("#txtKeyword").focusin(function () {
+            $("#logo1").css("display", "none");
+        });
+        $("#txtKeyword").focusout(function () {
+            $("#logo1").css("display", "inline");
+        });
+    });
+</script>

@@ -1,0 +1,196 @@
+﻿@model IEnumerable<DA_Web.ViewModel.Product_Full>
+
+@{
+    ViewBag.Title = "TrangChu";
+    Layout = "~/Views/Shared/_layout_display.cshtml";
+
+}
+
+<script src="~/Scripts/controller/scroll_navbarHeader.js"></script>
+<section class="categories" style="margin-bottom:30px">
+    <div class="container">
+        <div class="section-title">
+            <h2>Sản phẩm HOT</h2>
+        </div>
+        <div class="row">
+
+            <div class="categories__slider owl-carousel">
+
+                @foreach (var item in (ViewData["spHot"] as IEnumerable<DA_Web.Models.Table_SANPHAM>).Where(m => m.UuTien == true))
+                {
+                    <a href="@Url.Action("ChiTietSanPham", "Display", new { id = item.ID_SANPHAM })">
+                        <div class="col-lg-3 bg-item">
+
+                            <div class="categories__item set-bg">
+                                <img style="border-radius: 10px 10px;" src="@item.HINHANH" />
+                            </div>
+                            <div class="categories__item_setName">
+                                <h5>@item.TenSanPham</h5>
+
+                            </div>
+                        </div>
+                    </a>
+
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="categories" style="margin-bottom:30px">
+    <div class="container">
+        <div class="section-title">
+            <h2>Tìm kiếm phổ biến</h2>
+        </div>
+        <div class="row">
+
+            <div class="categories__slider owl-carousel">
+
+                @foreach (var item in (ViewData["spTruyCap"] as IEnumerable<DA_Web.Models.Table_SANPHAM>).OrderByDescending(m => m.VIEWER).Take(10).Where(m => m.Ngung == false))
+                {
+                    <a href="@Url.Action("ChiTietSanPham", "Display", new { id = item.ID_SANPHAM })">
+                        <div class="col-lg-3 bg-item">
+
+                            <div class="categories__item set-bg">
+                                <img style="border-radius: 10px 10px;" src="@item.HINHANH" />
+
+                            </div>
+                            <div class="categories__item_setName">
+                                <h5>@item.TenSanPham</h5>
+
+                            </div>
+                        </div>
+                    </a>
+
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Section Begin -->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Sản phẩm theo danh mục</h2>
+                </div>
+                <div class="featured__controls" style="margin-bottom:0px">
+
+                    <div class="sp_danhmuc owl-carousel owl-loaded owl-drag ">
+                        <div class="owl-stage-outer">
+
+                            <ul class="owl-stage">
+                                <li class="owl-item" data-filter="*">
+                                    <div class="item-show active_kh">  Tất cả </div>
+                                </li>
+                                @foreach (var item in Model.Select(m => m.TENLOAISANPHAM).Distinct())
+                                {
+                                    <li class="owl-item" data-filter=".@item.Replace(" ","")">
+                                        <div class="item-show">@item</div>
+                                    </li>
+                                }
+
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row featured__filter">
+            @foreach (var item2 in Model.Where(m => m.Ngung == false).GroupBy(m => m.ID_SANPHAM).Select(m => m.First()))
+            {
+                <div class="col-lg-3 col-md-3 col-sm-3 showdm mix oranges bg-item @item2.TENLOAISANPHAM.Replace(" ", "")">
+                    <div class="featured__item">
+
+                        <div class="featured__item__pic set-bg item ">
+                            <a href="@Url.Action("ChiTietSanPham", "Display", new { id = item2.ID_SANPHAM })"><img style="border-radius: 10px 10px;" src="@item2.HINHANH" alt="product-image" class="featured__item__pic set-bg" /></a>
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li class="add-to-cart"><a onclick="AddCart_fly(@item2.ID_SANPHAM)"><i class="fa fa-shopping-cart add-to-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="@Url.Action("ChiTietSanPham", "Display", new { id = item2.ID_SANPHAM })">@item2.TenSanPham</a></h6>
+                            <h5><span class="price">@string.Format("{0:0,000}", item2.DonGia) VNĐ</span></h5>
+                        </div>
+
+
+                    </div>
+                </div>
+            }
+        </div>
+
+
+    </div>
+</section>
+<!-- Featured Section End -->
+<!-- Featured Section Begin -->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Sản phẩm bán chạy</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter">
+            @foreach (var item in (ViewData["spBanChay"] as IEnumerable<DA_Web.ViewModel.Product_Full>).Where(m => m.Ngung == false))
+            {
+                <div class="col-lg-3 col-md-3 col-sm-3 showdm bg-item">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg item ">
+                            <a href="@Url.Action("ChiTietSanPham", "Display", new { id = item.ID_SANPHAM })"><img src="@item.HINHANH" alt="product-image" class="featured__item__pic set-bg" /></a>
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li class="add-to-cart"><a onclick="AddCart_fly(@item.ID_SANPHAM)"><i class="fa fa-shopping-cart add-to-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="@Url.Action("ChiTietSanPham", "Display", new { id = item.ID_SANPHAM })">@item.TenSanPham</a></h6>
+                            <h5><span class="price">@string.Format("{0:0,000}", item.DonGia) VNĐ</span></h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+</section>
+<!-- Featured Section End -->
+
+<div id="snackbar">
+    <p><i class="fa fa-warning"></i></p>
+    Xin lỗi ! Số lượng sản phẩm trong giỏ hàng đã đạt tối đa.
+</div>
+
+
+
+
+
+
+
+
+
+
+<script src="~/Scripts/js/owl.carousel.min.js"></script>
+<script src="~/Content/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Scripts/owl.carousel.min.js"></script>

@@ -1,0 +1,226 @@
+﻿@model IEnumerable<DA_Web.ViewModel.HoaDonGiaoHang>
+@{
+    ViewBag.Title = "DonGiaoHang_DaHuy";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+<link href="~/Content/css/delete_top.css" rel="stylesheet" />
+<style>
+    .nice-select .option {
+        padding-left: 15px;
+        padding-right: 5px;
+    }
+
+    .nice-select.open .list {
+        width: 100%;
+    }
+
+    .nice-select {
+        width: 100%;
+    }
+
+    .send-report {
+        width: 100%;
+        background: #000;
+        color: #fff;
+        text-align: center;
+        line-height: 35px;
+        font-size: 15px;
+    }
+
+    .show_dh img {
+        width: 30px;
+    }
+</style>
+<div class="ctn">
+    <h3>Đơn giao hàng đã hủy</h3>
+    <hr />
+
+
+
+
+    <table width="100%" cellpadding="3" cellspacing="0" border="1" style="text-align:center;margin-top:15px" id="tblParticipantList" class="show_dh">
+        <thead style="font-size:0.9em">
+            <tr>
+                <th>
+                    Mã ĐH
+                </th>
+                <th>
+                    Tên KH
+                </th>
+                <th>
+                    Số ĐT
+                </th>
+                <th>
+                    Địa chỉ
+                </th>
+                <th>
+                    Tổng tiền
+                </th>
+                <th>
+                    Đã giao
+                </th>
+                <th colspan="2">
+                    Công cụ
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="row_@item.ID_DONHANG">
+                    <td>
+                        @item.ID_DONHANG
+                    </td>
+                    <td>
+                        @item.TENKH
+                    </td>
+                    <td>
+                        @item.SDT
+                    </td>
+                    <td>
+                        @item.DIACHI
+                    </td>
+                    <td>
+                        <span id="price">@string.Format("{0:0,000}", item.TongTien)</span> VNĐ
+                    </td>
+                    <td width="10%">
+                        @if ((bool)item.Dagiao)
+                        {
+                            <img src="/Content/img/icon_success.png" width="100%" height="auto" />
+                        }
+                        else
+                        {
+                            <img src="/Content/img/icon_warning.png" width="100%" height="auto" id="access" />
+                        }
+
+                    </td>
+
+                    <td width="10%" id="nhapkho"><a title="Xem" onclick="clickView(@item.ID_DONHANG)"><img src="/Content/image/icon_view_xbig.png" class="img_icon_1" /></a></td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+
+    @*Chi tiết đơn hàng*@
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn" hidden="hidden">Open Modal</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 style="color: white; line-height: 35px; margin: auto">CHI TIẾT ĐƠN HÀNG</h5>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+
+                <table width="100%" cellpadding="3" cellspacing="0" border="1" style="text-align:center" class="table-bordered">
+                    <thead style="font-size:0.9em">
+                        <tr>
+                            <th>
+                                Mã SP
+                            </th>
+                            <th>
+                                Hình ảnh
+                            </th>
+                            <th>
+                                Tên SP
+                            </th>
+                            <th>Tùy chọn</th>
+                            <th>
+                                SL
+                            </th>
+                            <th>
+                                Đơn giá
+                            </th>
+                            <th>
+                                Tình trạng
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table_chitietdongiaohang"></tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    @*Báo cáo đơn thất bại*@
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn2" hidden="hidden">Open Modal</button>
+
+    <!-- The Modal -->
+    <div id="myModal2" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content" style="width:90%">
+            <div class="modal-header" style="background-color: #000000">
+
+                <h5 style="color: white; margin: auto;">BÁO CÁO ĐƠN HÀNG THẤT BẠI</h5>
+                <span class="close2">&times;</span>
+            </div>
+            <div class="modal-body" style="height:255px">
+                <table width="100%" border="0" cellpadding="10">
+                    <tr>
+                        <td>
+                            <label style="font-size:15px">Chọn lý do</label><br />
+                            <select id="select-aws">
+                                <option value="0">Khách hàng không nghe máy</option>
+                                <option value="1">Khách hàng không hài lòng về sản phẩm</option>
+                                <option value="2">Khách hàng không đủ tiền</option>
+                                <option value="3">Đơn hàng ảo</option>
+                                <option value="4">Lý do khác</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="option-dif" style="display:none">
+                        <td width="100%" style="display:block">
+                            <label style="font-size:15px">Nhập lý do </label><br />
+                            <div>
+                                <textarea style="font-size: 13px; width: 100%" id="baocao"></textarea>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="send-report" onclick="send_report()">
+                                Gửi báo cáo
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="back-page" style="font-size: 20px">
+        <button onclick="goBack()" class="back-button"><i class="fa fa-arrow-left"></i> </button>   <span style="margin-left:5px">Quay lại</span>
+    </div>
+</div>
+
+<script>
+
+    function checkTinhTrang(obj) {
+
+    }
+</script>

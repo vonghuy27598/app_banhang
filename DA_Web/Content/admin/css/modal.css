@@ -1,0 +1,63 @@
+﻿/* The Modal (background) */
+#myModal_showIMG {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+#myModal_showIMG .modal-content {
+  background-color: #fefefe;
+ height:490px !important;
+  margin:auto;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+#myModal_showIMG .close_modalimg {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#myModal_showIMG .close_modalimg:hover,
+.close_modalimg:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#myModal_showIMG .modal-header h4{
+    color:black;
+    line-height:35px
+}
+#myModal_showIMG .modal-header
+{
+    height: 10vh!important;
+    padding-top: 10px;
+    padding:16px
+}
+
+.addImg{
+    cursor: pointer;
+    background-color: cornflowerblue;
+    color: white!important;
+    font-weight: bold;
+    padding: 5px 15px;
+    border-radius: 30px;
+}
+.img_success{
+    cursor:pointer
+}
+.img_success:hover{
+    border:5px solid cornflowerblue
+}

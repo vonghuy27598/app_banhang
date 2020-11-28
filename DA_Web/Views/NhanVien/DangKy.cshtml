@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+<link href="~/Content/css/dangnhap.css" rel="stylesheet" />
+<!--kiểm tra việc nhập password-->
+<script type="text/javascript">
+    var check = function () {
+        if (document.getElementById('password').value ==
+            document.getElementById('confirm_password').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'Mật Khẩu Trùng Khớp';
+        } else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'Mật Khẩu KHÔNG Trùng Khớp';
+        }
+    }
+    var user = function () {
+        document.getElementById('tn').style.color = 'red';
+        document.getElementById('tn').innerHTML = 'Tài khoản đã được sử dụng';
+    }
+</script>
+<script>
+    var input = document.getElementById('thongbao');
+    input.oninvalid = function (event) {
+        event.target.setCustomValidity('Vui lòng nhập thông tin');
+    }
+</script>
+<div class="primari-box registered-account dn">
+    <form class="new-account-box" id="accountLogin" method="post" action="#">
+        <h3 class="box-subheading" style="font-weight:bold;text-transform:uppercase">Đăng ký cộng tác viên</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <div class="form-content">
+                <div class="form-group primary-form-group">
+                    <label for="loginemail">Họ & tên</label>
+                    @Html.TextBox("TenKhach", null, new { title = "Vui lòng nhập thông tin", id = "thongbao", required = "required", @class = "form-control input-feild" })
+                </div>
+                <div class="form-group primary-form-group">
+                    <label for="password">Tên đăng nhập</label>
+                    @Html.TextBox("TenDN", null, new { required = "required", @class = "form-control input-feild" })
+                </div>
+                <div style="color:red">@Html.ViewData["LoiUS"]</div><div id='tn'><br /></div>
+                <div class="form-group primary-form-group">
+                    <label for="password">Mật khẩu</label>
+                    @Html.Password("MatKhau", null, new { required = "required", id = "password", onkeyup = "check();", @class = "form-control input-feild" })
+                </div>
+                <div class="form-group primary-form-group">
+                    <label for="password">Nhập lại mật khẩu</label>
+                    @Html.Password("NhapLaiMatKhau", null, new { required = "required", id = "confirm_password", onkeyup = "check();", @class = "form-control input-feild" })
+
+                </div>
+                <div style="color:red">@Html.ViewData["LoiMK"]</div><div id='message'><br /></div>
+                <div class="form-group primary-form-group">
+                    <label for="password">Email</label>
+                    @Html.TextBox("Email", null, new { type = "email", required = "required", @class = "form-control input-feild" })
+                </div>
+                <div class="form-group primary-form-group">
+                    <label for="password" style="float:left">Giới tính</label>
+                    <div class="radiobtn">
+                        @Html.RadioButton("rdGioiTinh", "Nam", true) Nam
+                        @Html.RadioButton("rdGioiTinh", "Nữ") Nữ
+                    </div>
+                </div>
+
+                <div class="form-group primary-form-group">
+
+                    <label for="password" style="width:100%">Địa chỉ</label>
+                    @Html.TextArea("DiaChi", null, new { required = "required", @class = "txtDiachi" })
+                </div>
+                <div class="form-group primary-form-group">
+                    <label for="password">Số điện thoại</label>
+                    @Html.TextBox("SoDT", null, new { required = "required", @class = "form-control input-feild", type = "tel", maxlength = "10", minlength = "10", pattern = "[0-9]{10}", autocomplete = "off" })
+                </div>
+                <div class="form-group primary-form-group">
+                    <label for="password">Ngày sinh</label>
+                    @Html.TextBox("NgaySinh", null, new { type = "date", required = "required", @class = "form-control input-feild" })
+                </div>
+                <input id='BrowserWidth' name='BrowserWidth' type='hidden' />
+                <div class="submit-button">
+                    <input type="submit" value="Đăng ký" id="signinCreate" class="btn main-btn" />
+                </div>
+            </div>
+        }
+    </form>
+
+</div>
+<script type='text/javascript'>
+    $(function () { $("#BrowserWidth").val($(window).width()); });
+</script>

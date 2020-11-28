@@ -1,0 +1,86 @@
+﻿
+@using PagedList.Mvc;
+@model PagedList.PagedList<DA_Web.Models.KHACHHANG>
+@{
+    ViewBag.Title = "TaiKhoan";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">DANH MỤC tài khoản</h1>
+    <p class="mb-4"></p>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"></h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Mã KH</th>
+                            <th>Username</th>
+                            <th>Password</th>                          
+                            <th>Công cụ</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Mã KH</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Công cụ</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            
+                            <tr id="row_@item.ID_KH">
+                                <td>@item.ID_KH</td>
+                                <td>@item.TAIKHOAN</td>
+                                <td>@item.MATKHAU</td>
+                                
+                                <td>@Ajax.ImageActionLink("../../Content/image/icon_xoa.png", "Xóa", "Delete", new { @id = item.ID_KH }, new AjaxOptions { Confirm = "Bạn có muốn xóa không?", OnComplete = "$('#row_" + @item.ID_KH + "').remove()", HttpMethod = "DELETE" })</td>
+                            </tr>
+
+                        }
+
+
+                    </tbody>
+                </table>
+
+
+
+
+
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-5">
+                <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite" style="padding-left: 30px;
+    font-size: 20px">Trang@(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount</div>
+</div>
+<div class="col-sm-12 col-md-7">
+    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+
+        @Html.PagedListPager(Model, page => Url.Action("ThongTin", new { page = page }))
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+

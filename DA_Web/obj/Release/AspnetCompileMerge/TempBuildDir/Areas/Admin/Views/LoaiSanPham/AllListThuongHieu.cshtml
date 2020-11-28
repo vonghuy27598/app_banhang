@@ -1,0 +1,89 @@
+﻿@model IEnumerable<DA_Web.ViewModel.ThuongHieu>
+@{
+    ViewBag.Title = "AllListThuongHieu";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">DANH MỤC SẢN PHẨM QUẠT</h1>
+    <p class="mb-4"></p>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"></h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Mã thương hiệu</th>
+                            <th>Tên thương hiệu</th>
+                            <th>Số lượng sản phẩm</th>
+
+                            <th colspan="2">Công cụ</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Mã thương hiệu</th>
+                            <th>Tên thương hiệu</th>
+                            <th>Số lượng sản phẩm</th>
+
+                            <th colspan="2">Công cụ</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                           
+                            <tr id="row_@item.ID_LOAI">
+                                <td>@item.ID_LOAI</td>
+                                <td>@item.TENLOAI</td>
+                                <td>@item.SOSP</td>
+                                <td><a href="@Url.Action("Edit", "LoaiSanPham", new { id = @item.ID_LOAI })" title="Sửa"><img src="~/Content/image/icon_sua.png" /></a></td>
+                                @if (item.SOSP > 0)
+                                {
+                                 <td><a style="border:none;background:none;cursor:pointer" onclick="clickXoa()"><img src="~/Content/image/icon_xoa.png" /></a></td>
+                                }
+                                else
+                                {
+                                 <td>@Ajax.ImageActionLink("../../content/image/icon_xoa.png", "xóa", "Delete", new { @id = item.ID_LOAI }, new AjaxOptions { Confirm = "Bạn có muốn xóa không?", OnComplete = "$('#row_" + @item.ID_LOAI + "').remove()", HttpMethod = "DELETE" })</td>
+
+                                }
+                            </tr>
+
+                        }
+
+
+                    </tbody>
+                </table>
+
+                <script>
+                    function clickXoa() {
+                        alert("Xóa thất bại thương hiệu này hiện đang có sản phẩm !!!")
+                    }
+                    
+
+                </script>
+
+
+
+               
+            </div>
+        </div>
+   @if (ViewBag.MessError != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("@Html.Raw(ViewBag.MessError)");
+        };
+    </script>
+}
+
+
+</div>
+
+</div>
+

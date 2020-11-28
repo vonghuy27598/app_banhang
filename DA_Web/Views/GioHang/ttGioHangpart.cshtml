@@ -1,0 +1,40 @@
+﻿@using DA_Web.Models
+@model List<GioHang>
+<style>
+    a.cross-icon {
+        color: #434343;
+        font-size: 18px;
+        position: absolute;
+        right: 10px;
+        top: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease 0s;
+    }
+
+        a.cross-icon:hover {
+            color: #FF4F4F;
+        }
+
+    .giohangrong {
+        text-align: center;
+        font-size: 18px;
+    }
+
+        .giohangrong img {
+            margin-top: 20px;
+        }
+</style>
+<li style="padding-right:15px" id="cart"><a  href="@Url.Action("GioHang", "GioHang")"><i class="fa fa-shopping-cart cart-icon shopping-cart" id="fa-cart"></i> <span class="count_cart">@ViewBag.TongSoLuong</span></a> </li>
+@*<li>
+    <a href="@Url.Action("GioHang", "GioHang")" id="total_cart" class="total_cart" style="color:#000">
+
+        @if (ViewBag.TongTien != 0)
+        {
+            @String.Format("{0:0,000}", ViewBag.TongTien);
+        }
+        else
+        { @String.Format("{0:N0}", 0) } VNĐ
+
+    </a>
+
+</li>*@

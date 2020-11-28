@@ -1,0 +1,84 @@
+﻿@model IEnumerable<DA_Web.ViewModel.NhanVien>
+@{
+    ViewBag.Title = "GiaoHang";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+<script type="text/javascript">
+    function Selected() {
+        var d = document.getElementById("onchange").value;
+        $.ajax({
+            url: "GiaoHang_select",
+            data: { date: d },
+            datatype: "json",
+            type: "POST",
+            success: function (response) {
+                if (response.status != null) {
+                    $(".table-bordered").find("tr:gt(0)").remove();
+
+                    var contentTable = "";
+
+                    $.each(response.status, function () {
+                        contentTable += '<tr id=row_' + this.ID_NHANVIEN + '><td>' + this.ID_NHANVIEN + '</td> <td>' + this.HoTen + '</td> <td>' + this.TongDH +'</td> </tr>';
+                    });
+                    $('.table_change').append(contentTable);
+                }
+            }
+        });
+    }
+
+</script>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="row" style="margin-bottom: 10px;text-align:center;display:block">
+            <span style="font-size:25px">Chiết khấu hôm nay</span>
+            <hr style="width: 30%; border: 0.1px solid #000047;" />
+        </div>
+        <div class="row" style="margin-bottom:10px">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <label>Ngày:</label>
+                @Html.TextBox("Date", DateTime.Now.Date, new { @style = "width: 180px;", type = "date", required = "required", @class = "form-control input-feild", onChange = "Selected()", id = "onchange" })
+                <p id="demo"></p>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã nhân viên</th>
+                        <th>Tên nhân viên</th>
+                        <th>Tổng đơn hàng đã giao</th>
+                    </tr>
+                </thead>
+                <tbody class="table_change">
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.ID_NHANVIEN">
+                            <td>@item.ID_NHANVIEN</td>
+                            <td>@item.HoTen</td>
+                            <td>@item.TongDH</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+<script>
+        $(document).ready(function () {
+            var uniqueItems = [];
+            $('.table_change td').filter(function (index, element) {
+
+                if ($.inArray($(element).text(), uniqueItems) === -1) {
+                    uniqueItems.push($(element).text());
+                } else {
+                    $(element).parent().remove();
+                }
+            });
+            uniqueItems = [];
+        });
+</script>

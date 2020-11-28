@@ -1,0 +1,239 @@
+﻿
+.open-ct-product{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 200px;
+    cursor:pointer
+}
+.open-ct-product:active .open-ct-product{
+    background-color:black
+}
+.slider-counter{
+    position: absolute;
+    top:0;
+    padding: 8px;
+    font-size: 13px;
+    border-radius: 30px;
+    background: #000000b8;
+    color: white;     
+    z-index: 1;
+}
+.ct_right
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100000; /* Sit on top */
+    padding-top: 20vh; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.close2 {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close2:hover,
+    .close2:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    box-sizing: content-box;
+   
+}
+
+.modal-body {
+    padding: 2px 16px;
+    height: 146px;
+    overflow: auto;
+    height: 250px;
+}
+
+
+
+@media all and (max-width: 414px) {
+   .modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    box-sizing: content-box;
+   
+}
+ .modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 95%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+ 
+     
+}  
+
+ .modal-body {
+    padding: 2px 16px;
+    
+    overflow: auto;
+    height: 250px;
+}
+ .table-bordered{font-size: 87%;}
+
+}
+
+@media all and (max-width: 900px) {
+    .modal {
+        padding-top:25vh
+    }
+       .modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    box-sizing: content-box;
+   
+}
+ .modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 95%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+ 
+     
+}  
+
+ .modal-body {
+    padding: 2px 16px;
+    
+    overflow: auto;
+    height: 250px;
+}
+
+}
+
+@media all and ( min-width: 901px) {
+        .modal {
+        padding-top:25vh
+    }
+       .modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    box-sizing: content-box;
+   
+}
+ .modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 60%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+ 
+     
+}  
+
+ .modal-body {
+    padding: 2px 16px;
+    
+    overflow: auto;
+    height: 250px;
+}
+ 
+}
+@media only screen and (min-width:375px)
+{
+   .slider-counter {
+     
+    }
+}
+
+.hide-success {
+    display:none
+}
+.more-info{
+    display:block;
+    margin-bottom:15px;
+    color: #227add;
+    font-weight: bold;
+}
+.title-td{
+    width:20%
+}
+.td-ct{
+    /*display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
+    width: 100%;
+    word-break: break-all;
+    font-size:100%
+
+}
+.content-td
+{
+    width:80%
+}

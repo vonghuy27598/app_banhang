@@ -1,0 +1,81 @@
+﻿@model DA_Web.ViewModel.Product_Full
+@{
+    ViewBag.Title = "EditTC";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+<script type="text/javascript">
+    var check = function () {
+        document.getElementById('message').style.color = 'red';
+        document.getElementById('message').innerHTML = 'Đã có tùy chọn tương tự trong kho';
+    }
+    var user = function () {
+        document.getElementById('dongia').style.color = 'red';
+        document.getElementById('dongia').innerHTML = 'Đơn giá phải lớn hơn 1000 VNĐ';
+    }
+    var user = function () {
+        document.getElementById('soluong').style.color = 'red';
+        document.getElementById('soluong').innerHTML = 'Số lượng phải lớn hơn 1';
+    }
+</script>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <h4>NHẬP KHO</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+                <div class="row" style="padding-left: 10px;margin-top:10px">
+                    <div class="col-md-9 col-sm-9 ">
+                        <div class="content" style="width: 100%; margin: auto; padding-left: 50px; ">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6 ">
+                                        @Html.LabelFor(model => model.TuyChon, new { @class = "control-label col-md-12" })
+                                        @Html.TextBox("TuyChon", null, new { @required = "required" })
+                                        @Html.ValidationMessageFor(model => model.TuyChon)
+                                        <br />
+                                        <span style="color:red">@Html.ViewData["LoiTT"]</span><span id='message'><br /></span>
+                                    </div>
+
+                                    <div class="col-md-6 ">
+                                        @Html.LabelFor(model => model.SoLuong, new { @class = "control-label col-md-12" })
+                                        @Html.TextBox("SoLuong", null, new { @type = "number", @required = "required" })
+                                        @Html.ValidationMessageFor(model => model.SoLuong)
+                                        <br />
+                                        <span style="color:red">@Html.ViewData["SoLuong"]</span><span id='soluong'><br /></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    @Html.LabelFor(model => model.DonGia, new { @class = "control-label col-md-12" })
+                                    @Html.TextBox("DonGia", null, new { @type = "number", @required = "required" })
+                                    @Html.ValidationMessageFor(model => model.DonGia)
+                                    <br />
+                                    <span style="color:red">@Html.ViewData["DonGia"]</span><span id='dongia'><br /></span>
+                                </div>
+                                <div class="col-md-6 ">
+                                    @Html.LabelFor(model => model.ID_SANPHAM, new { @class = "control-label col-md-12" })
+                                    @Html.TextBox("ID_SANPHAM", null, new { @hidden ="hidden", @required = "required" })
+                                    @Html.ValidationMessageFor(model => model.ID_SANPHAM)
+                                    <br />
+                                    <span style="color:red">@Html.ViewData["DonGia"]</span><span id='dongia'><br /></span>
+                                </div>
+                            </div>
+                            @*-----------------*@
+                            <div class="form-group" style="margin-top:35px">
+                                <div class="col-md-offset-2 col-md-10" style="text-align:center;">
+                                    <input type="submit" value="Thêm tùy chọn" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+

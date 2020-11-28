@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DA_Web.ViewModel.Product_Full>
+@{
+    ViewBag.Title = "QuanLyTuyChon";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="row" style="margin-bottom: 10px;text-align:center;display:block">
+            <span style="font-size:25px">Quản lý tùy chọn</span>
+            <hr style="width: 30%; border: 0.1px solid #00000047;" />
+        </div>
+        <a href="@Url.Action("NhapKho", "NhapKho", new { id= (int)ViewBag.ID_SANPHAM })">Thêm tùy chọn</a>
+        <div class="table-responsive">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã tùy chọn</th>
+                        <th>Mã sản phẩm</th>
+                        <th>Tùy chọn</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th colspan="2">Công cụ</th>
+                    </tr>
+                </thead>
+                <tbody class="table_change">
+                    @foreach (var item in Model)
+                    {
+                    <tr id="row_@item.ID_TUYCHON">
+                        <td>@item.ID_TUYCHON</td>
+                        <td>@item.ID_SANPHAM</td>
+                        <td>@item.TuyChon</td>
+                        <td>@item.SoLuong</td>
+                        <td>@item.DonGia</td>
+
+                        <td id="sua"><a href="@Url.Action("EditTC", "NhapKho", new { id= @item.ID_TUYCHON })" title="Sửa"><img src="/Content/image/icon_sua.png" /></a></td>
+                        <td id="xoa">@Ajax.ImageActionLink("../../../Content/image/icon_xoa.png", "Xóa", "DeleteTC", new { @id = @item.ID_TUYCHON }, new AjaxOptions { Confirm = "Bạn có muốn xóa không?", OnComplete = "$('#row_" + @item.ID_TUYCHON + "').remove()", HttpMethod = "DELETE" })</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

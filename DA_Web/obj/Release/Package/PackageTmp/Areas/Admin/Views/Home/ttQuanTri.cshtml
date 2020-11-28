@@ -1,0 +1,225 @@
+﻿@model DA_Web.Models.Table_NHANVIEN
+<style>
+    .info .row {
+        margin-bottom: 30px;
+    }
+
+    .info {
+        padding-left: 50px;
+    }
+</style>
+<li class="nav-item dropdown no-arrow">
+    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small">@Model.HoTen</span>
+        @if (Model.ANHDAIDIEN != null)
+        {
+            <img class="img-profile rounded-circle" src="@Model.ANHDAIDIEN">
+        }
+        else
+        {
+            <img class="img-profile rounded-circle" src="/Content/img/avatar_null.jpg">
+        }
+
+
+    </a>
+    <!-- Dropdown - User Information -->
+    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#InfoModal">
+            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+            Thông tin cá nhân
+        </a>
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#ChangeModal">
+            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+            Đổi ảnh
+        </a>
+
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            Đăng xuất
+        </a>
+    </div>
+</li>
+
+<!-- Information Modal-->
+<div class="modal fade" id="InfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin cá nhân</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("ChangeInfo", "Home"))
+            {
+                <div class="modal-body">
+
+                    <div class="info">
+                        <div class="row">
+                            <div class="col-md-5">
+                                Họ tên:
+                            </div>
+                            <div class="col-md-7">
+                                @Html.TextBox("hoten")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                Số điện thoại
+                            </div>
+                            <div class="col-md-7">
+                                @Html.TextBox("sdt")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                Giới tính
+                            </div>
+                            <div class="col-md-7">
+                                @Html.RadioButton("gioitinh", true, new { @id = "rNam" }) Nam
+                                @Html.RadioButton("gioitinh", false, new { @id = "rNu" }) Nữ
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                Tài khoản ngân hàng
+                            </div>
+                            <div class="col-md-7">
+                                @Html.TextBox("tkbank")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                Email
+                            </div>
+                            <div class="col-md-7">
+                                @Html.TextBox("email")
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                    <button class="btn btn-primary" id="capnhat">Cập nhật</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- ChangeImage Modal-->
+<div class="modal fade" id="ChangeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ảnh đại diện</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("ChangeImage", "Home"))
+            {
+                <div class="modal-body" style="background-color: #d1cfcf;height:450px">
+
+                    @if (Model.ANHDAIDIEN == null)
+                    {
+                        <img class="img-profile rounded-circle" src="/Content/img/avatar_null.jpg" id="pictureUpload2" style="width:100%;height:100%;cursor:pointer">
+                    }
+                    else
+                    {
+                        <img class="img-profile rounded-circle" src="@Model.ANHDAIDIEN" id="pictureUpload2" style="width: 100%; height: 100%; cursor: pointer; ">
+                    }
+
+
+                    <input type="text" name="picture2" id="picture2" style="display:none" />
+                    <input type="file" id="fileUpload2" name="fileUpload2" style="display:none" />
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                    <button class="btn btn-primary" id="btn_Change">Lưu ảnh</button>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+<!--ChangePassword-->
+<div class="modal fade" id="InfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin cá nhân</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("DoiMK", "User"))
+            {
+                <div class="modal-body">
+
+                    <div class="info">
+                        <div class="row">
+                            <div class="col-md-5">
+                                Mật khẩu cũ:
+                            </div>
+                            <div class="col-md-7">
+                                @Html.Password("MatKhauCu")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                Mật khẩu mới:
+                            </div>
+                            <div class="col-md-7">
+                                @Html.Password("MatKhau")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                Nhập lại mật khẩu mới:
+                            </div>
+                            <div class="col-md-7">
+                                @Html.Password("NhapLaiMatKhau")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                    <button class="btn btn-primary" id="capnhat">Xác nhận</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thoát khỏi hệ thống</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Bạn có muốn thoát khỏi hệ thống quản trị không ?</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                <a class="btn btn-primary" href="@Url.Action("Index","Login")">Thoát</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

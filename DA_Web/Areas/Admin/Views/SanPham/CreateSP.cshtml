@@ -1,0 +1,194 @@
+﻿@model DA_Web.ViewModel.Product_Full
+
+@{
+    ViewBag.Title = "CreateSP";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+
+<style>
+  
+</style>    
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>THÊM MỚI SẢN PHẨM</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+                <div class="row" style="padding-left: 10px;margin-top:10px">
+                    <div class="col-md-3 col-sm-3 img">
+
+                        <img id="pictureUpload" src="/Content/img/chamhoi.png" width="100%" height="100%" />
+
+                    </div>
+                    <div class="col-md-9 col-sm-9 ">
+                        <div class="content" style="width: 100%; margin: auto; padding-left: 50px; ">
+
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.TenSanPham, new { @class = "control-label col-md-12" })
+                                        @Html.TextBoxFor(model => model.TenSanPham)
+                                        @Html.ValidationMessageFor(model => model.TenSanPham)
+                                    </div>
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.DonGia, new { @class = "control-label col-md-12" })
+                                        @Html.TextBoxFor(model => model.DonGia)
+                                        @Html.ValidationMessageFor(model => model.DonGia)
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.ChiTiet, new { @class = "control-label col-md-12" })
+                                        @Html.EditorFor(model => model.ChiTiet, new { @class = "input-chitiet" })
+                                        @Html.ValidationMessageFor(model => model.ChiTiet)
+                                    </div>
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.ChietKhau, new { @class = "control-label col-md-12" })
+                                        @Html.EditorFor(model => model.ChietKhau)
+                                        @Html.ValidationMessageFor(model => model.ChietKhau)
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.Size, new { @class = "control-label col-md-12" })
+                                        @Html.EditorFor(model => model.Size, new { @class = "input-chitiet" })
+                                        @Html.ValidationMessageFor(model => model.Size)
+                                    </div>
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.CHATLIEU, new { @class = "control-label col-md-12" })
+                                        @Html.EditorFor(model => model.CHATLIEU)
+                                        @Html.ValidationMessageFor(model => model.CHATLIEU)
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.MauSac, new { @class = "control-label col-md-12" })
+                                        @Html.EditorFor(model => model.MauSac, new { @class = "input-chitiet" })
+                                        @Html.ValidationMessageFor(model => model.MauSac)
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.ID_LOAISANPHAM, new { @class = "control-label col-md-12" })
+                                        @Html.DropDownListFor(model => model.ID_LOAISANPHAM, (IEnumerable<SelectListItem>)ViewBag.LoaiCon)
+
+                                    </div>
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.ID_NSX, new { @class = "control-label col-md-12" })
+                                        @Html.DropDownListFor(model => model.ID_NSX, (IEnumerable<SelectListItem>)ViewBag.NhaSX)
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-6 ">
+                                        @Html.LabelFor(model => model.Ngung, new { @class = "control-label col-md-12" })
+
+                                        @Html.CheckBox("Ngung")<span> Ngưng</span>
+
+                                    </div>
+
+                                    <div class="col-md-6 ">
+                                        @Html.LabelFor(model => model.HINHANH, new { @class = "control-label col-md-12" })
+                                        @Html.TextBoxFor(model => model.HINHANH, new { @name = "picture", @id = "picture", @readonly = "readonly" })
+
+                                        <input type="file" id="fileUpload" name="fileUpload" style="display:none" />
+                                        <input type="button" value="..." id="btnUpload" />
+                                        @Html.ValidationMessageFor(model => model.HINHANH)
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            @*-----------------*@
+
+                            <div class="form-group" style="margin-top:35px">
+                                <div class="col-md-offset-2 col-md-10" style="text-align:center;">
+                                    <input type="submit" value="Thêm mới sản phẩm" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+        </div>
+    </div>
+        @section upload
+{
+            <script>
+                $(function () {
+
+                    $('#btnUpload').click(function () {
+                        $('#fileUpload').trigger('click');
+                    });
+                    $('#fileUpload').change(function () {
+                        if (window.FormData !== undefined) {
+                            var fileUpload = $('#fileUpload').get(0);
+                            var files = fileUpload.files;
+
+                            var formData = new FormData();
+                            formData.append('file', files[0]);
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Admin/SanPham/ProcessUpload',
+                                contentType: false,
+                                processData: false,
+                                data: formData,
+
+                                success: function (urlImage) {
+                                    $('#pictureUpload').attr('src', urlImage);
+                                    $('#picture').val(urlImage);
+                                },
+                                error: function (err) {
+                                    alert('Có lỗi khi upload ảnh: ' + err.statusText);
+                                }
+                            });
+                        }
+                    });
+                });
+
+
+            </script>
+        }
+
+

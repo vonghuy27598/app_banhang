@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "DangNhap";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+<link href="~/Content/css/dangnhap.css" rel="stylesheet" />
+
+
+<div class="primari-box registered-account dn">
+    <form class="new-account-box" id="accountLogin" method="post" action="#">
+        <h3 class="box-subheading" style="font-weight:bold;text-transform:uppercase">Đăng nhập</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <div class="form-content">
+                <div class="form-group primary-form-group">
+                    <label for="loginemail">Tài khoản</label>
+                    @*<input type="text" value="" name="email" id="loginemail" class="">*@
+                    @Html.TextBox("TenDN", null, new { required = "required", @class = "form-control input-feild" })
+
+                </div>
+                <div class="form-group primary-form-group">
+                    <label for="password">Mật khẩu</label>
+                    @*<input type="password" value="" name="password" id="password" class="form-control input-feild">*@
+                    @Html.Password("MatKhau", null, new { required = "required", @class = "form-control input-feild" })
+
+                </div>
+
+
+                <input id='BrowserWidth' name='BrowserWidth' type='hidden' />
+                <div class="submit-button">
+
+                    <input type="submit" value="Đăng nhập" id="signinCreate" class="btn main-btn" />
+
+                </div>
+                <div class="forget-password" style="margin-top:15px;margin-bottom:30px;">
+                    <a href="@Url.Action("QuenMK","Pass")" style="color:#3babe4;font-weight:300">Quên mật khẩu?</a>
+                </div>
+                <div class="mess">@ViewBag.ThongBao</div>
+                <div class="forget-password" style="margin-bottom:10px;margin-top:20px">
+                    <a href="@Url.Action("DangKy","NhanVien")" style="padding: 10px 25px;color: white;background-color: #41B72A;font-weight: bold;border-radius:10px">Tạo tài khoản</a>
+                </div>
+            </div>
+        }
+    </form>
+
+</div>
+
+
+
+
+<script type='text/javascript'>
+    $(function () { $("#BrowserWidth").val($(window).width()); });
+</script>

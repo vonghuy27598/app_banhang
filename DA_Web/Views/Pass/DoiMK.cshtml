@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "DoiMK";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+
+<link href="~/Content/css/dangnhap.css" rel="stylesheet" />
+<!--kiểm tra việc nhập password-->
+<script type="text/javascript">
+    var check = function () {
+        if (document.getElementById('password').value ==
+          document.getElementById('confirm_password').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'Mật Khẩu Trùng Khớp';
+        } else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'Mật Khẩu KHÔNG Trùng Khớp';
+        }
+    }
+    var user = function () {
+        document.getElementById('tn').style.color = 'red';
+        document.getElementById('tn').innerHTML = 'Mật khẩu cũ không đúng';
+    }
+</script>
+<script>
+    var input = document.getElementById('thongbao');
+    input.oninvalid = function (event) {
+        event.target.setCustomValidity('Vui lòng nhập thông tin');
+    }
+</script>
+<div class="primari-box registered-account dn">
+    <form class="new-account-box" id="accountLogin" method="post" action="#">
+        <h3 class="box-subheading" style="font-weight:bold;text-transform:uppercase">Đổi mật khẩu</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <div class="form-content">
+                <div class="form-group primary-form-group">
+                    <label for="password">Mật khẩu cũ</label>
+                    @Html.Password("MatKhauCu", null, new { required = "required", @class = "form-control input-feild" })
+                </div>
+                <div style="color:red">@Html.ViewData["LoiMK1"]</div><div id='tn'><br /></div>
+                <div class="form-group primary-form-group">
+                    <label for="password">Mật khẩu</label>
+                    @Html.Password("MatKhau", null, new { required = "required", id = "password", onkeyup = "check();", @class = "form-control input-feild" })
+                </div>
+                <div class="form-group primary-form-group">
+                    <label for="password">Nhập lại mật khẩu</label>
+                    @Html.Password("NhapLaiMatKhau", null, new { required = "required", id = "confirm_password", onkeyup = "check();", @class = "form-control input-feild" })
+
+                </div>
+                <div style="color:red">@Html.ViewData["LoiMK"]</div><div id='message'><br /></div>
+                <div class="submit-button">
+                    <input type="submit" value="Xác nhận" id="signinCreate" class="btn main-btn" />
+                </div>
+            </div>
+        }
+    </form>
+
+</div>
+

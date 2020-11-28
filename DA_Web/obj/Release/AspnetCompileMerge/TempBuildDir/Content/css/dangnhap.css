@@ -1,0 +1,380 @@
+﻿.dn {
+    width: 400px;
+    margin: auto;
+    margin-top: 100px;
+    padding: 5px 10px;
+    border: 0.5px solid #e6dbdb;
+    border-radius: 20px;
+    box-shadow: inset 0px 1px 4px 0px;
+}
+.mid{
+        background-color:white
+    }
+    .dn h3 {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+.txtDiachi{
+    width: 100%;
+}
+ .radiobtn{
+     margin-left:5px
+ }
+
+.submit-button {
+    text-align: center;
+}
+
+    .submit-button input {
+        background-color: #024283;
+        color: white;
+        font-weight: bold;
+    }
+
+.forget-password {
+    text-align: center;
+}
+
+.main-btn {
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.loi {
+    float: left;
+    padding: 8px 5px;
+    font-size: 20px;
+    color: red;
+}
+
+.input-feild {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.forget-password a {
+    color: #beb5b5;
+    margin-top: 5px;
+}
+
+@media only screen and (max-width:799px)
+{
+    .top{
+        display:none
+    }
+    #signinCreate{
+        background-color:#7b9af3;
+    }
+    
+  
+}
+
+@media only screen and (min-width:800px)
+{
+   
+   
+}
+
+@media all and (min-width: 320px){
+  .dn {
+        font-size: 70%;
+        width: 90%;
+        padding: 5% 10%;
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom:100px
+    }
+
+        .dn h3 {
+            font-size: 2em;
+            margin-bottom:10px
+        }
+
+    .input-feild {
+        font-size: 1em;
+    }
+    .forget-password a {
+    font-size: 1em;
+}
+     .submit-button input {
+        font-size:1em;
+        margin-top:5px
+    }
+     .dn .mess{
+         text-align:center;
+         font-size:1em;
+         color:red;
+         margin-top:5px
+     }
+}
+
+@media all and (min-width: 480px){
+  .dn {
+        font-size: 72.5%;
+        width: 70%;
+        padding: 5% 10%;
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom:100px
+    }
+
+        .dn h3 {
+            font-size: 2em;
+            margin-bottom:10px
+        }
+
+    .input-feild {
+        font-size: 1em;
+    }
+    .forget-password a {
+    font-size: 1em;
+}
+     .submit-button input {
+        font-size:1em;
+        margin-top:5px
+    }
+     .dn .mess{
+         text-align:center;
+         font-size:1em;
+         color:red;
+         margin-top:5px
+     }
+}
+
+@media all and (min-width: 600px) {
+    .dn {
+        font-size: 74.5%;
+        width: 55%;
+        padding: 5% 7%;
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom:100px
+    }
+
+        .dn h3 {
+            font-size: 2em;
+            margin-bottom:10px
+        }
+
+    .input-feild {
+        font-size: 1em;
+    }
+    .forget-password a {
+    font-size: 1em;
+}
+     .submit-button input {
+        font-size:1em;
+        margin-top:5px
+    }
+     .dn .mess{
+         text-align:center;
+         font-size:1em;
+         color:red;
+         margin-top:5px
+     }
+
+}
+
+@media all and (min-width: 1024px) {
+
+    .dn {
+    width: 400px;
+    margin: auto;
+    margin-top: 100px;
+    padding: 20px 40px;
+    border: 0.5px solid #e6dbdb;
+    border-radius: 20px;
+    box-shadow: inset 0px 1px 4px 0px;
+    font-size:100%;
+    margin-bottom:100px
+}
+
+    .dn h3 {
+        text-align: center;
+        margin-bottom: 15px;
+     
+    }
+
+    .dn label {
+    }
+
+.submit-button {
+    text-align: center;
+}
+
+    .submit-button input {
+        background-color: #7ead39;
+        color: white;
+        font-weight: bold;
+    }
+
+.forget-password {
+    text-align: center;
+}
+
+.main-btn {
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.loi {
+    float: left;
+    padding: 8px 5px;
+    font-size: 20px;
+    color: red;
+}
+
+.input-feild {
+    float:left;
+    width:100%;
+    margin-bottom: 10px;
+}
+
+.forget-password a {
+    color: #beb5b5;
+    margin-top: 5px;
+}
+.dn .radiobtn{
+    float:left
+}
+
+}
+
+
+/*@media only screen and (max-width: 480px) {
+     .dn {
+        font-size: 65.5%;
+        width: 90%;
+        padding: 5% 10%;
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom:100px
+    }
+
+        .dn h3 {
+            font-size: 2em;
+            margin-bottom:10px
+        }
+
+    .input-feild {
+        font-size: 1em;
+    }
+    .forget-password a {
+    font-size: 1em;
+}
+     .submit-button input {
+        font-size:1em;
+        margin-top:5px
+    }
+     .dn .mess{
+         text-align:center;
+         font-size:1em;
+         color:red;
+         margin-top:5px
+     }
+}*/
+
+/*@media only screen and (min-width: 00px) {
+    .dn {
+        font-size: 65.5%;
+        width: 70%;
+        padding: 5% 10%;
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom:100px
+    }
+
+        .dn h3 {
+            font-size: 2em;
+            margin-bottom:10px
+        }
+
+    .input-feild {
+        font-size: 1em;
+    }
+    .forget-password a {
+    font-size: 1em;
+}
+     .submit-button input {
+        font-size:1em;
+        margin-top:5px
+    }
+     .dn .mess{
+         text-align:center;
+         font-size:1em;
+         color:red;
+         margin-top:5px
+     }
+}*/
+
+
+/*@media only screen and (min-width: 1024px) {
+  .dn {
+    width: 400px;
+    margin: auto;
+    margin-top: 100px;
+    padding: 20px 25px;
+    border: 0.5px solid #e6dbdb;
+    border-radius: 20px;
+    box-shadow: inset 0px 1px 4px 0px;
+    font-size:100%;
+    margin-bottom:100px
+}
+
+    .dn h3 {
+        text-align: center;
+        margin-bottom: 15px;
+     
+    }
+
+    .dn label {
+    }
+
+.submit-button {
+    text-align: center;
+}
+
+    .submit-button input {
+        background-color: #7ead39;
+        color: white;
+        font-weight: bold;
+    }
+
+.forget-password {
+    text-align: center;
+}
+
+.main-btn {
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.loi {
+    float: left;
+    padding: 8px 5px;
+    font-size: 20px;
+    color: red;
+}
+
+.input-feild {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.forget-password a {
+    color: #beb5b5;
+    margin-top: 5px;
+}
+}*/
+
+
+@media only screen and (min-height:320px) {
+     .form-dn{
+        padding-top:50px
+    }
+}

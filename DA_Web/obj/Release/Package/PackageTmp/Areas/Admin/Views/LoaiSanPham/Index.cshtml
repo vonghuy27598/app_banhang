@@ -1,0 +1,78 @@
+﻿@model IEnumerable<DA_Web.ViewModel.LoaiSanPham>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+
+<link href="~/Content/admin/css/adminTable.css" rel="stylesheet" />
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="row" style="margin-bottom: 10px;text-align:center;display:block">
+            <span style="font-size:25px">Danh mục loại sản phẩm</span>
+            <hr style="width: 30%; border: 0.1px solid #00000047;" />
+        </div>
+        <div class="row" style="margin-bottom:10px">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+
+                @Html.DropDownList("dropdownlist_loaisanpham", (IEnumerable<SelectListItem>)ViewBag.LoaiCha, new { @id = "dropdownlist_loaisanpham" })
+
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+
+                <a href="@Url.Action("CreateLoaiSP", "LoaiSanPham") " style="float:right;color:red;text-decoration:none;font-weight:bold">Thêm mới danh mục</a>
+
+
+            </div>
+        </div>
+     
+        <div style="text-align:center;margin-bottom:20px">
+            <input id="myInput" type="text" placeholder="Tìm kiếm.." style="width:350px">
+        </div>
+        <div class="table-responsive">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã danh mục</th>
+                        <th>Tên danh mục</th>
+                        <th>Số lượng sản phẩm</th>
+                        <th colspan="2">Công cụ</th>
+                    </tr>
+                </thead>
+                <tbody class="table_change" id="myTable">
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.ID_LOAISANPHAM">
+                            <td>@item.ID_LOAISANPHAM</td>
+                            <td>@item.TenLoaiSanPham</td>
+                            <td>@item.soluonghienco</td>
+                            <td id="sua"><a href="@Url.Action("EditLoaiSP", "LoaiSanPham", new { id = @item.ID_LOAISANPHAM })" title="Sửa"><img src="/Content/image/icon_sua.png" /></a></td>
+                            @if (item.soluonghienco > 0)
+                            {
+                                <td><a style="border:none;background:none;cursor:pointer" onclick="clickXoa()"><img src="/Content/image/icon_xoa.png" /></a></td>
+
+                            }
+                            else
+                            {
+                                <td id="xoa">@Ajax.ImageActionLink("../../Content/image/icon_xoa.png", "Xóa", "Delete", new { @id = @item.ID_LOAISANPHAM }, new AjaxOptions { Confirm = "Bạn có muốn xóa không?", OnComplete = "$('#row_" + @item.ID_LOAISANPHAM + "').remove()", HttpMethod = "DELETE" })</td>
+
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <script>
+                function clickXoa() {
+                    alert("Xóa thất bại danh mục này hiện đang có sản phẩm !!!")
+                }
+
+
+            </script>
+
+
+
+        </div>
+    </div>
+</div>

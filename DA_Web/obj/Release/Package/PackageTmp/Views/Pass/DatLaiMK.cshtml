@@ -1,0 +1,56 @@
+﻿@model DA_Web.ViewModel.ResetPassword
+@{
+    ViewBag.Title = "DatLaiMK";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+
+<link href="~/Content/css/dangnhap.css" rel="stylesheet" />
+<!--kiểm tra việc nhập password-->
+<script type="text/javascript">
+    var check = function () {
+        if (document.getElementById('password').value ==
+          document.getElementById('confirm_password').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'Mật Khẩu Trùng Khớp';
+        } else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'Mật Khẩu KHÔNG Trùng Khớp';
+        }
+    }
+</script>
+<script>
+    var input = document.getElementById('thongbao');
+    input.oninvalid = function (event) {
+        event.target.setCustomValidity('Vui lòng nhập thông tin');
+    }
+</script>
+<div class="primari-box registered-account dn">
+    <form class="new-account-box" id="accountLogin" method="post" action="#">
+        <h3 class="box-subheading" style="font-weight:bold;text-transform:uppercase">Đặt lại mật khẩu</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false)
+            <div class="form-content" style="margin-top:15px">
+               
+                <div class="form-group primary-form-group">
+                    <label for="password" style="width:40%">Mật khẩu</label>
+                    @Html.TextBoxFor(m=>m.Password ,null,new { @required = "required", @id = "password",@type="password", @onkeyup = "check();", @class = "form-control input-feild" })
+                </div>
+                <div class="form-group primary-form-group">
+                    <label for="password" style="width:40%">Nhập lại mật khẩu</label>
+                    @Html.TextBoxFor(m => m.RePassword, null,  new { @required = "required", @id = "password", @type = "password", @onkeyup = "check();", @class = "form-control input-feild" })
+
+                </div>
+                <div style="color:red;text-align:center">@ViewBag.Message</div><div id='message'><br /></div>
+                <div class="form-group primary-form-group">
+                    @Html.HiddenFor(a=>a.ReserCode)
+                </div>
+                <div class="submit-button">
+                    <input type="submit" value="Xác nhận" id="signinCreate" class="btn main-btn" />
+                </div>
+            </div>
+        }
+    </form>
+
+</div>

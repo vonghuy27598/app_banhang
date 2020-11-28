@@ -1,0 +1,126 @@
+﻿@model IEnumerable<DA_Web.ViewModel.HoaDon>
+@{
+    ViewBag.Title = "LichSuDatHang";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+<link href="~/Content/css/delete_top.css" rel="stylesheet" />
+<div class="ctn">
+    <h3>Lịch sử đơn đặt hàng</h3>
+    <hr />
+    <table width="100%" cellpadding="3" cellspacing="0" border="1" style="text-align:center">
+        <thead style="font-size:0.9em">
+            <tr>
+                <th>
+                    Mã đơn hàng
+                </th>
+                <th>
+                    Ngày đặt hàng
+                </th>
+                <th>
+                    Tổng tiền
+                </th>
+                <th>
+                    Tình trạng
+                </th>
+                <th>
+                    Công cụ
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.ID_DONHANG
+                    </td>
+                    <td>
+                        @String.Format("{0:dd/MM/yyyy}", item.NgayGiaoDich)
+                    </td>
+                    <td>
+                        <span id="price">@string.Format("{0:0,000}", item.TONGTIEN)</span> VNĐ
+                    </td>
+                    <td>
+                        @if ((bool)item.Damua)
+                        {
+                            <span>Đã thanh toán</span>
+                        }
+                        else
+                        {
+                            <span>Chưa thanh toán</span>
+                        }
+
+                    </td>
+
+                    <td id="nhapkho"><a title="Xem" onclick="clickView(@item.ID_DONHANG)"><img src="/Content/image/icon_view.png" width="50%" /></a></td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div style="margin-top:5vh;text-align:center">
+        <span style="color:#d7cccc"> * Chú ý: lịch sử đơn hàng chỉ hiện 15 đơn gần nhất *</span>
+    </div>
+
+
+
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn" hidden="hidden">Open Modal</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 style="color: white; line-height: 35px; margin: auto">CHI TIẾT ĐƠN HÀNG</h5>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+
+                <table width="100%" cellpadding="3" cellspacing="0" border="1" style="text-align:center" class="table-bordered">
+                    <thead style="font-size:0.9em">
+                        <tr>
+                            <th>
+                                Mã SP
+                            </th>
+                            <th>
+                                Hình ảnh
+                            </th>
+                            <th>
+                                Tên SP
+                            </th>
+                            <th>
+                                Tùy chọn
+                            </th>
+                            <th>
+                                SL
+                            </th>
+                            <th>
+                                Đơn giá
+                            </th>
+                            <th>
+                                Tình trạng
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table_chitiet"></tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="back-page" style="font-size: 20px">
+        <button onclick="goBack()" class="back-button"><i class="fa fa-arrow-left"></i> </button>   <span style="margin-left:5px">Quay lại</span>
+    </div>
+</div>
+
+
+
+

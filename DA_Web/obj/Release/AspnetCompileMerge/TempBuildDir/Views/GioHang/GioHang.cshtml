@@ -1,0 +1,396 @@
+﻿@using DA_Web.Models
+@model List<GioHang>
+@{
+    ViewBag.Title = "GioHang";
+    Layout = "~/Views/Shared/_layout_display.cshtml";
+}
+
+<style>
+    #cart-summary tbody td.cart-description small a:hover {
+        color: #ff0000 !important;
+    }
+    .mid{
+        background-color:white
+    }
+     .btncapnhat {
+        padding: 6px 14px;
+        background-image: url(../Content/image/update.png);
+        background-color: white;
+        background-size: cover;
+        border: none;
+        outline: none;
+    }
+
+    .tb_dathang tr {
+        box-shadow: 0 14px 28px rgb(255 255 255 / 25%), 0 10px 10px rgb(154 154 154 / 22%);
+    }
+
+    .header__cart {
+        visibility: hidden;
+    }
+
+
+
+
+
+
+
+</style>
+
+<link href="~/Content/css/delete_top.css" rel="stylesheet" />
+@{
+    List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
+}   
+@if(listGioHang.Count > 0)
+{          
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart">
+    <div>
+        <div class="clearAll_Cart" style="text-align:right;padding:10px">
+            <a onclick="deleteAll()">Xóa giỏ hàng</a>
+        </div>
+        <div class="row" style="margin:0;width:100%">
+            <div class="col-lg-12" style="padding-right:0">
+                <div class="shoping__cart__table">
+                    <table class="tb_dathang">
+
+                       
+                            <tbody>
+@foreach (var item in Model)
+{
+                                <tr id="row_@item.sID_SANPHAM">
+                                    <td class="img-sp">
+                                        <a href="@Url.Action("ChiTietSanPham", "Display", new {id = item.sID_SANPHAM })"><img alt="@item.sTenSanPham" src="@item.sHinhAnh"></a>
+                                    </td>
+                                    <td class="chitiet-sp">
+                                        <div style="width:100%">
+                                            <div class="row dongTenSP">
+                                                <p><a href="@Url.Action("ChiTietSanPham", "Display", new {id = item.sID_SANPHAM })">@item.sTenSanPham</a></p>
+
+                                            </div>
+                                            @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { @sID_SANPHAM = item.sID_SANPHAM }))
+                                            {
+                                                <div class="row shoping__cart__quantity">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty">
+                                                            <span class="dec qtybtn">-</span>
+                                                            <input class="soluong_@item.sID_SANPHAM" name="qtybutton" type="number" value="@item.sSoLuong" data-id="@item.sID_SANPHAM" min="1"  readonly="readonly">
+                                                            <span class="inc qtybtn sl_@item.sID_SANPHAM">+</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row dongGia">
+
+                                                    <div class="left-gia" style="color:red">
+
+                                                        @String.Format("{0:0,0}", @item.sDonGia) VNĐ
+                                                    </div>
+
+
+
+                                                </div>
+                                            }
+                                            <div class="note">
+                                                @*<i class="fa fa-comment"></i>*@
+                                                <input type="text" placeholder="Ghi chú" id="note_input" class="content-note" data-id="@item.sID_SANPHAM" onchange="changeText(@item.sID_SANPHAM)" />
+                                            </div>
+                                        </div>
+                                        <script>
+                                            
+                                            function sendNote() {
+                                               
+                                                $('.note').each(function () {                                                  
+                                                    var id = $(this).find('input').data('id');
+                                                    var note = $(this).find('input').val();
+                                                    $.ajax({
+                                                        url: "SaveNote/GioHang",
+                                                        data: { id: id, note: note },
+                                                        datatype: "json",
+                                                        type: "POST",
+                                                        success: function (response) 
+                                                        {   
+                                                           document.location="/GioHang/CheckLogin"
+                                                        },                                                                                                           
+                                                    });                                                                                                      
+                                                }) ;
+                                            };
+                                        </script>
+                                    </td>
+                                    @*<td id="shoping__cart__total_@item.sID_SANPHAM" class="cart-thanhtien">
+                                            @String.Format("{0:0,0}", item.sThanhTien) VNĐ
+                                        </td>*@
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close cart_quantity_delete" data-id="@item.sID_SANPHAM" title="Xóa"></span>
+
+                                    </td>
+</tr>
+}          
+                            </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="margin:0">
+            <div class="col-lg-12">
+                <div class="shoping__cart__btns">
+                    <a href="@Url.Action("TrangChu","Display")" class="primary-btn cart-btn">Tiếp tục mua hàng</a>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__checkout">
+                    <h5>Cart Total</h5>
+                    <ul>
+                        <li>Tổng tiền <span class="checkout">@String.Format("{0:0,0}", ViewBag.TongTien) VNĐ</span></li>
+                    </ul>
+                    @*@{
+                            string a = "";
+                        }
+                        @if (Session["User1"] != null)
+                        {
+                            a = "TTKH";
+                        }
+                        else
+                        {
+                            a = "CheckLogin";
+                        }*@
+                    <a @*href="@Url.Action("CheckLogin","GioHang")"*@ class="primary-btn" onclick="sendNote()">Đặt Hàng</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shoping__checkout_mobile">
+        <div class="left-checkout">
+            <p>Tổng tiền giỏ hàng:</p> <span class="checkout">@String.Format("{0:0,0}", ViewBag.TongTien) VNĐ</span>
+        </div>
+        <div class="right-checkout">
+            <a @*href="@Url.Action("CheckLogin","GioHang")"*@ class="primary-btn" id="check-out" onclick="sendNote()">Đặt Hàng</a>
+        </div>
+
+
+    </div>
+</section>
+
+
+
+<div id="snackbar">
+    <p><i class="fa fa-warning"></i></p>
+    Xin lỗi ! Không đủ hàng cho sản phẩm này.
+</div>
+}
+else {
+<div style='padding-top:100px;padding-bottom:150px;text-align:center'>
+    <p style='color: #cc2828; font-size: 20px; font-weight: bold;'>Giỏ hàng của bạn đang rỗng</p>
+    <img id='nullCart' src='/Content/image/empty_cart.png' style="margin-bottom:30px"/>
+    <a href="/" style='padding: 10px; background-color: #f58377; border-radius: 10px; color: white;'>Mua sắm ngay</a>
+</div>
+
+}
+<div class="back-page">
+    <button onclick="goBackCart()" class="back-button"><i class="fa fa-arrow-left"></i> </button>   <span style="margin-left:5px">Giỏ hàng</span>
+</div>
+<script>
+
+    $('.cart_quantity_delete').on("click",function(){
+        var id = $(this).data("id");
+        var r = confirm("Bạn có chắc muốn bỏ sản phẩm này?");
+        if(r==true)
+        {
+            $.ajax({
+                url: "XoaGioHang",
+                data: { id: id},
+                datatype: "json",
+                type: "POST",
+                success: function (response) { 
+                    if(response.status != null)
+                    {                       
+                        $('#row_'+id).remove();
+                        $('.checkout').html(formatNumber(response.status.TongTienUD, '.', ',') + ' VNĐ');
+                        if (response.status.TongTienUD == 0)
+                        {
+                            $('.shoping-cart').empty();
+                            $('.shoping-cart').prepend("<div style='padding-top:20px;padding-bottom:90px;text-align:center'><p style='color: #cc2828; font-size: 20px; font-weight: bold;'>Giỏ hàng của bạn đang rỗng</p><img id='nullCart' src='/Content/image/empty_cart.png' style='margin-bottom:30px' /><a href='/' style='padding: 10px; background-color: #f58377; border-radius: 10px; color: white;'>Mua sắm ngay</a></div>")
+
+                        }
+                    }
+                                                  
+                }
+            });
+        }
+
+    });
+
+
+
+
+    function deleteAll()
+    {
+        swal({
+            title: "Bạn chắc chứ?",
+            text: "Lưu ý: tất cả sản phẩm trong giỏ hàng sẽ bị xóa!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            buttons: ["Hủy", "Đồng ý"],
+        })
+ .then(( function (willDelete){
+     if (willDelete) {
+         $.ajax({
+             url: "Delete_All_Cart",            
+             datatype: "json",
+             type: "POST",
+             success: function (response) {
+                   
+                 $('.tb_dathang tbody').remove();
+                 $('.checkout').html('00 VNĐ');
+                 $('.shoping-cart').empty();
+                 $('.shoping-cart').prepend("<div style='padding-top:20px;padding-bottom:90px;text-align:center'><p style='color: #cc2828; font-size: 20px; font-weight: bold;'>Giỏ hàng của bạn đang rỗng</p><img id='nullCart' src='/Content/image/empty_cart.png' style='margin-bottom:30px' /><a href='/' style='padding: 10px; background-color: #f58377; border-radius: 10px; color: white;'>Mua sắm ngay</a></div>")
+                   
+             }
+         });
+        }
+    }));
+    }
+
+
+
+    var proQty = $('.pro-qty');
+  
+    proQty.on('click', '.qtybtn', function () {
+        var $button = $(this);
+
+        var oldValue = $button.parent().find('input').val();
+        if ($button.hasClass('inc')) {
+            
+            var newVal = parseFloat(oldValue) + 1;
+            
+        } else if($button.hasClass('dec')) {
+            // Don't allow decrementing below zero
+            if (oldValue > 1) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 1;
+            }
+        }else{
+            var newVal = parseFloat(oldValue);
+        }
+        $button.parent().find('input').val(newVal);
+    });
+
+    proQty.on('click', '.qtybtn', function () {
+        $('.shoping__cart__quantity').each(function () {
+           
+            var sl = $('.soluong').val();
+            var id = $('.soluong').data("id");
+
+            sl = $(this).find('input').val();
+            id = $(this).find('input').data("id");
+
+            $.ajax({
+                url: "UpdateSL/GioHang",
+                data: { id: id, sl: sl },
+                datatype: "json",
+                type: "POST",
+                success: function (response) {
+                    if(response.count != null)
+                    {
+                        if(sl < response.count)
+                        {
+                            $('.showToast_'+id).removeAttr("onclick");
+                            $('.showToast_'+id).css("color", "#000");
+                            $('.showToast_'+id).addClass('inc');
+                            $('.inc').removeClass('showToast_'+id);
+                            if (response.status != null) {
+
+                                var noi = "#shoping__cart__total_" + response.status.sID_SANPHAM;
+                                $(noi).html(formatNumber(response.status.ThanhTienUD, '.', ',') + ' VNĐ');
+                                $('.checkout').html(formatNumber(response.status.TongTienUD, '.', ',') + ' VNĐ');
+                            }
+                        }else if(sl >= response.count){
+                            if (response.status != null) {
+
+                                var noi = "#shoping__cart__total_" + response.status.sID_SANPHAM;
+                                $(noi).html(formatNumber(response.status.ThanhTienUD, '.', ',') + ' VNĐ');
+                                $('.checkout').html(formatNumber(response.status.TongTienUD, '.', ',') + ' VNĐ');
+                            }
+                            
+                            $('.sl_'+id).css("color", "#dbd9d9");
+                            $('.sl_'+id).addClass('showToast_'+id);                          
+                            $('.showToast_'+id).removeClass('inc');
+                            $('.showToast_'+id).attr("onclick","showToast()");
+                         
+                        }
+                       
+                    }
+                   
+                }
+            });
+        });
+    });
+    
+    function showToast() {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    };
+
+    function formatNumber(nStr, decSeperate, groupSeperate) {
+        nStr += '';
+        x = nStr.split(decSeperate);
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
+        }
+        return x1 + x2;
+    }
+
+
+  
+    $(document).ready(function () {
+        $('.shoping__cart__quantity').each(function () {
+           
+            var sl = $('.soluong').val();
+            var id = $('.soluong').data("id");
+
+            sl = $(this).find('input').val();
+            id = $(this).find('input').data("id");
+
+            $.ajax({
+                url: "checkSoLuong/GioHang",
+                data: { id: id, sl: sl },
+                datatype: "json",
+                type: "POST",
+                success: function (response) {
+                   
+                    if(!response.status)
+                    {
+                            $('.showToast_'+id).removeAttr("onclick");
+                            $('.showToast_'+id).css("color", "#000");
+                            $('.showToast_'+id).addClass('inc');
+                            $('.inc').removeClass('showToast_'+id);
+                           
+                    }else{
+                            
+                            
+                            $('.sl_'+id).css("color", "#dbd9d9");
+                            $('.sl_'+id).addClass('showToast_'+id);                          
+                            $('.showToast_'+id).removeClass('inc');
+                            $('.showToast_'+id).attr("onclick","showToast()");
+                         
+                        }
+                 
+                   
+                }
+            });
+        });
+   
+    });
+
+</script>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>

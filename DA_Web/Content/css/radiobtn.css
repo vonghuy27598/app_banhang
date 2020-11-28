@@ -1,0 +1,41 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+
+strong{
+  color: #58ba83;
+}
+.transition{
+  transition: all .3s ease-out;
+}
+.heading{
+  text-align: center;
+  font-size:0.8em;
+  
+}
+.center-align{
+  width: 300px;
+  left: 50%;
+  top: 50%;
+
+}
+
+input[type="radio"]{
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
+
+label {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  background-color: #828282;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 3px;
+  .transition;
+}
+input[type="radio"]:checked + label{
+  background-color: red;
+}
+

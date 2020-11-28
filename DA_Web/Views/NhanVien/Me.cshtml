@@ -1,0 +1,185 @@
+﻿@model DA_Web.Models.Table_NHANVIEN
+@{
+    ViewBag.Title = "Me";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+<link href="~/Content/admin/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="~/Content/css/me.css" rel="stylesheet" />
+<style>
+</style>
+@if (Session["User1"] == null || Session["User1"].ToString() == "")
+{
+    <div class="mid login">
+        <nav>
+            <ul class="list-inline">
+                <li><a class="primary-btn cart-btn" href="@Url.Action("DangNhap","NhanVien")"><i class="fa fa-user"></i>Đăng nhập</a></li>
+                <li><a class="primary-btn cart-btn" href="@Url.Action("DangKy","NhanVien")"><i class="fa fa-edit"></i>Đăng ký</a></li>
+            </ul>
+        </nav>
+    </div>
+
+}
+else
+{
+    <div class="mid">
+        <nav>
+            <ul class="list-inline">
+                <li>
+
+                    <div class="top-me">
+                        <div class="right-seting">
+                            <a href="@Url.Action("SettingMe","Display")" style="color:white"><i class="fa fa-cog"></i></a>
+                        </div>
+                        @if (Model.ANHDAIDIEN == null)
+                        {
+                            <img class="img-profile rounded-circle" onclick="changeIMG()" src="/Content/img/avatar_null.jpg">
+                        }
+
+                        else
+                        {
+                            <img class="img-profile rounded-circle" onclick="changeIMG()" src="@Model.ANHDAIDIEN">
+                        }
+                        <h5 style="margin-left: 15px">@Model.Username</h5>
+
+                    </div>
+
+
+
+
+
+
+
+                </li>
+
+                <li><a class="primary-btn cart-btn" href="@Url.Action("LichSuDatHang", "NhanVien", new {ID_NHANVIEN = @Model.ID_NHANVIEN })"><i class="fa fa-history"></i>Lịch sử đặt hàng</a></li>
+                @if (Model.ID_LOAINHANVIEN == 2)
+                {
+                    <li>
+                        <a class="primary-btn cart-btn" href="@Url.Action("DonGiaoHang", "NhanVien", new {ID_NHANVIEN = @Model.ID_NHANVIEN })">
+                            <i class="fa fa-book"></i>
+                            Đơn giao hàng
+                        </a>
+                    </li>
+                }
+                @if (Model.ID_LOAINHANVIEN == 3)
+                {
+                    <li>
+                        <a class="primary-btn cart-btn" href="@Url.Action("QuanLyDonDatHang", "NhanVien")">
+                            <i class="fa fa-book"></i>
+                            Quản lý đơn đặt hàng
+                        </a>
+                    </li>
+                }
+                @if (Model.ID_LOAINHANVIEN == 5)
+                {
+                    <li>
+                        <a class="primary-btn cart-btn" href="@Url.Action("Boss_DaHuy", "NhanVien")">
+                            <i class="fa fa-book"></i>
+                            Đơn hàng bị hủy
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+    <div class="image-info">
+        <div id="myModal_img" class="modal modal_img">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 style="color:white">ẢNH ĐẠI DIỆN</h4>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+
+                    @using (Html.BeginForm("ChangeImage", "Display"))
+                    {
+                        <div class="modal-body body_img" style="background-color: #d1cfcf;height:300px">
+
+                            @if (Model.ANHDAIDIEN == null)
+                            {
+                                <img class="img-profile rounded-circle" src="/Content/img/avatar_null.jpg" id="pictureUpload2" style="width:100%;height:100%;cursor:pointer">
+                            }
+                            else
+                            {
+                                <img class="img-profile rounded-circle" src="@Model.ANHDAIDIEN" id="pictureUpload2" style="width: 100%; height: 100%; cursor: pointer; ">
+                            }
+
+                            <input type="text" name="picture2" id="picture2" style="display:none" />
+                            <input type="file" id="fileUpload2" name="fileUpload2" style="display:none" />
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                            <button class="btn btn-primary" id="btn_Change">Lưu ảnh</button>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <button id="myBtn_img" hidden="hidden">Open Modal</button>
+
+
+
+
+
+
+
+
+
+    <!-- Page level plugins -->
+
+}
+<script type="text/javascript">
+    var modal_img = document.getElementById("myModal_img");
+    // Get the button that opens the modal
+    var btn_img = document.getElementById("myBtn_img");
+    function changeIMG() {
+        if (btn_img != null) {
+            btn_img.click();
+        }
+    }
+    var span_img = document.getElementsByClassName("close")[0];
+    if (btn_img != null) {
+        btn_img.onclick = function () {
+            //$.ajax({
+            //    url: "ChitietDonHang",
+            //    data: { ID_DONHANG: iddh },
+            //    datatype: "json",
+            //    type: "POST",
+            //    success: function (response) {
+
+            //    }
+
+            //});
+            modal_img.style.display = "block";
+        }
+    }
+    span_img.onclick = function () {
+        modal_img.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        if (modal_img != null) {
+            if (modal_img.style.display == "block") {
+                if (event.target == modal_img) {
+                    modal_img.style.display = "none";
+                }
+            }
+        }
+
+
+    }
+
+
+</script>
+
+@*<script src="~/Scripts/controller/mobile.js"></script>*@

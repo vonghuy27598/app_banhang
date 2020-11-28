@@ -1,0 +1,133 @@
+﻿@model DA_Web.ViewModel.Product_Full
+@{
+    ViewBag.Title = "NhapKho";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+<div class="card shadow mb-4">
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>NHẬP KHO</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+                <div class="row" style="padding-left: 10px;margin-top:10px">
+                    <div class="col-md-3 col-sm-3 img">
+                        @if (Model.HINHANH != null)
+                        {
+                            <img id="pictureUpload" src="@Model.HINHANH" width="100%" height="100%" />
+                        }
+                        else
+                        {
+                            <img id="pictureUpload" src="/Content/img/chamhoi.png" width="100%" height="100%" />
+                        }
+
+
+                    </div>
+                    <div class="col-md-9 col-sm-9 ">
+                        <div class="content" style="width: 100%; margin: auto; padding-left: 50px; ">
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.ID_SANPHAM, new { @class = "control-label col-md-12" })
+                                        @Html.TextBoxFor(model => model.ID_SANPHAM, new { @readonly = "readonly" })
+                                      
+                                    </div>
+
+                                   
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.TenSanPham, new { @class = "control-label col-md-12" })
+                                        @Html.TextBoxFor(model => model.TenSanPham, new { @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(model => model.TenSanPham)
+                                    </div>
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.DonGia, new { @class = "control-label col-md-12" })
+                                        @Html.TextBoxFor(model => model.DonGia, new { @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(model => model.DonGia)
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.ID_LOAISANPHAM, new { @class = "control-label col-md-12" })
+                                        @Html.TextBoxFor(model => model.TENLOAISANPHAM, new { @readonly = "readonly" })
+
+                                    </div>
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.ID_NSX, new { @class = "control-label col-md-12" })
+                                        @Html.TextBoxFor(model => model.NhaSX, new { @readonly = "readonly" })
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.ChiTiet, new { @class = "control-label col-md-12" })
+                                        @Html.TextAreaFor(model => model.ChiTiet, new { @class = "input-chitiet", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(model => model.ChiTiet)
+                                    </div>
+
+                                    <div class="col-md-6 text">
+                                        @Html.LabelFor(model => model.ChietKhau, new { @class = "control-label col-md-12" })
+                                        @Html.TextBoxFor(model => model.ChietKhau, new { @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(model => model.ChietKhau)
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col-md-6 ">
+                                        @Html.LabelFor(model => model.Ngung, new { @class = "control-label col-md-12" })
+
+                                        @Html.CheckBox("Ngung", new { disabled = "disabled" })<span> Ngưng</span>
+
+                                    </div>
+
+                                    <div class="col-md-6 ">
+                                        @Html.LabelFor(model => model.SoLuong, new { @class = "control-label col-md-12" })
+                                        @Html.TextBox("SoLuong",0)                                     
+                                        @Html.ValidationMessageFor(model => model.SoLuong)
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*-----------------*@
+
+                            <div class="form-group" style="margin-top:35px">
+                                <div class="col-md-offset-2 col-md-10" style="text-align:center;">
+                                    <input type="submit" value="Nhập sản phẩm" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+

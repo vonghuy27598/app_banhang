@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Areas/Admin/Views/Shared/layout_login_admin.cshtml";
+}
+
+<script type="text/javascript">
+    var user = function () {
+        document.getElementById('tn').style.color = 'red';
+        document.getElementById('tn').innerHTML = 'Tài khoản đã được sử dụng';
+    }
+</script>
+<div class="login100-form-signup validate-form">
+    <span class="login100-form-title p-b-43" style="font-size:25px;font-weight:bold">
+        TẠO TÀI KHOẢN QUẢN TRỊ VIÊN
+    </span>
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+
+        <div class="wrap-input100 validate-input" data-validate="Vui lòng nhập họ tên">
+            <input class="input100" type="text" name="hoten">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Họ và tên</span>
+        </div>
+
+
+
+        <div class="wrap-input100 validate-input" data-validate="Vui lòng nhập số điện thoại">
+            <input class="input100" type="tel" name="sdt" pattern="[0-9]{10}" maxlength="10">
+            <span class=" focus-input100"></span>
+            <span class="label-input100">Số điện thoại</span>
+
+
+        </div>
+
+        <div class="flex-sb-m w-full p-t-3 p-b-32">
+            <div class="contact100-form-checkbox" style="padding-left:10px">
+                <span style="margin-right:30px">Giới tính</span>
+                @Html.RadioButton("rdGioiTinh", true, new { @checked = "checked", @id = "rNu" }) Nam
+                @Html.RadioButton("rdGioiTinh", false, new {@id="rNam" }) Nữ
+            </div>
+
+
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Vui lòng nhập tài khoản ngân hàng">
+            <input class="input100" type="tel" name="nganhang" pattern="[0-9]{10}" maxlength="10">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Tài khoản ngân hàng</span>
+
+        </div>
+
+
+
+        <div class="wrap-input100 validate-input" data-validate="Vui lòng nhập địa chỉ">
+            <input class="input100" type="text" name="diachi">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Địa chỉ</span>
+
+        </div>
+        <div class="wrap-input100 ">
+            <input class="input100" type="email" name="email">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Email</span>
+
+        </div>
+        <div class="wrap-input100 ">
+            <input class="input100" type="text" name="skype">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Skype</span>
+
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Tài khoản không được rỗng">
+            <input class="input100" type="text" minlength="8" name="username">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Tài khoản</span>
+            <div style="color:red">@Html.ViewData["LoiUS"]</div><div id='tn'><br /></div>
+
+        </div>
+
+
+        <div class="wrap-input100 validate-input" data-validate="Mật khẩu không được rỗng">
+            <input class="input100" type="password" minlength="8" name="password" id="password">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Mật khẩu</span>
+
+        </div>
+        <div class="wrap-input100 validate-input" data-validate="Nhập lại mật khẩu không được rỗng">
+            <input class="input100" type="password" name="confirm_password" id="confirm_password">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Nhập lại mật khẩu</span>
+
+
+        </div>
+
+
+
+        <div class="container-login100-form-btn">
+            <button class="login100-form-btn">
+                Đăng ký
+            </button>
+        </div>
+        <div style="text-align:center;margin-top:30px">
+            <a href="@Url.Action("Index")" class="link">
+                Đăng nhập vào hệ thống quản lý
+            </a>
+        </div>
+
+        <h4 style="color:red;font-weight:bold;text-align:center;margin-top:30px;font-size:15px">@ViewBag.ThongBao</h4>
+    }
+</div>
+<script>
+    var password = document.getElementById("password")
+  , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Nhập lại mật khẩu không đúng");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+</script>

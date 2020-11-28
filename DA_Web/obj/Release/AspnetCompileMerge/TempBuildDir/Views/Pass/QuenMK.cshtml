@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "QuenMK";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+<link href="~/Content/css/dangnhap.css" rel="stylesheet" />
+<div class="primari-box registered-account dn" style="margin-top:100px">
+    <form class="new-account-box" id="accountLogin" method="post" action="#">
+        <h3 class="box-subheading" style="font-weight:bold;text-transform:uppercase">Quên mật khẩu</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <div class="form-content">
+                <div>
+                   
+                </div>
+                <div class="form-group primary-form-group">
+                    <label for="password">Email </label>
+                    @Html.TextBox("EmailCF", null, new { required = "required", @class = "form-control input-feild" })
+                </div>
+                <div style="color:red;text-align:center">@ViewBag.Message</div><div id='tn'><br /></div>
+                
+                <div class="submit-button">
+                    <input type="submit" value="Xác nhận" id="signinCreate" class="btn main-btn" />
+                </div>
+            </div>
+        }
+    </form>
+
+</div>
+
+<div class="back-page">
+    <div class="ct_left" style="display: contents;width: 15%;">
+        <button onclick="goBackCart()" class="back-button"><i class="fa fa-arrow-left"></i> </button>
+    </div>
+
+</div>

@@ -1,0 +1,348 @@
+﻿@model IEnumerable<DA_Web.ViewModel.HoaDon>
+@{
+    ViewBag.Title = "QuanLyDonDatHang";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+
+<link href="~/Content/css/delete_top.css" rel="stylesheet" />
+<style>
+    .ctn .tb_ql td {
+        font-size: .75em;
+    }
+    .current
+    {
+        font-size:11px;
+    }
+    .list .option 
+    {
+        font-size:11px
+    }
+</style>
+<script type="text/javascript">
+    function all_dh()
+    {
+        location.reload();
+    }
+
+
+
+    function Selected(format) {
+        var form = format;
+        var d = "";
+        if(form == "day")     
+            d = document.getElementById("onchange").value;
+        else
+            d = document.getElementById("onchange_month").value;
+        $("#hd_date").text(d);
+        $('#select-change-hd option[value=none]').attr('selected','selected');
+        $(".current").text("------------------------");
+        $(".list").find(".option").removeClass("selected");
+        $(".list").find(".option").removeClass("focus");
+        $.ajax({
+            url: "QuanLyDonDatHang_select",
+            data: { date: d},
+            datatype: "json",
+            type: "POST",
+            success: function (response) {
+                if (response.status != null) {
+                    $(".tb_ql").find("tr:gt(0)").remove();
+
+                    var contentTable = "";
+
+                    $.each(response.status, function () {
+                        var damua = "Đã thanh toán";
+                        if (this.Damua == false)
+                        { 
+                            damua = "Chưa thanh toán";
+                            if(this.TinhTrangDon == false)
+                                
+                                damua = "<span style='color:red;font-weight:800'>Bị hủy <b class='open_lydo' style='color:blue' onclick='open_lydo(" + this.ID_DONHANG + ")'>Xem</b></span>";
+                        }
+                            
+                        var nguoigiao = this.ID_NGUOIGIAO;
+                        var ten_nguoiban = "";
+                        var date = this.NgayGiaoDich;
+                        var nowDate = new Date(parseInt(date.substr(6)));
+                        var result = nowDate.format("dd/mm/yyyy");
+                        if(this.TEN_NGUOIBAN != null)
+                        
+                            ten_nguoiban = this.TEN_NGUOIBAN;
+                        
+                        if (this.ID_NGUOIGIAO == null)
+                            nguoigiao = '<a title="Xem" onclick="clickGetNV(' + this.ID_DONHANG + ')"><img src="/Content/img/icon_warning.png" width="40%" height="auto" /></a>';
+                        else
+                            nguoigiao = '<img src="/Content/img/icon_success.png" width="40%" height="auto" />';
+                        contentTable += '<tr> <td>' + this.ID_DONHANG + '</td> <td>' + ten_nguoiban + '</td><td>' + result + '</td> <td><span id="price">' + formatNumber(this.TONGTIEN, '.', ',') + '</span> VNĐ </td> <td> ' + damua + '  </td> <td width="17%" id="id_nvgiaohang_' + this.ID_DONHANG + '">' + nguoigiao + '</td> <td id="nhapkho"><a title="Xem" onclick="clickView(' + this.ID_DONHANG + ')"><img src="/Content/image/icon_view.png" /></a></td>';
+                    });
+                    $('.table_change').append(contentTable);
+                    
+                }
+            }
+
+
+        });
+
+        function formatNumber(nStr, decSeperate, groupSeperate) {
+            nStr += '';
+            x = nStr.split(decSeperate);
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
+            }
+            return x1 + x2;
+        }
+
+    }
+    $(document).ready(function () {
+        $("#clickShowNC").click(function () {
+            $("#panel").slideToggle("slow");
+        });
+    });
+</script> 
+<div class="ctn">
+    <h3>Quản lý đơn đặt hàng</h3>
+    <hr />
+    <span style="float:right;cursor:pointer" onclick="all_dh()">Hiển thị tất cả</span>
+    <div id="clickShowNC" style="display:inline-block">
+        Hiển thị nâng cao <i class="fa fa-arrow-down"></i>
+    </div>
+    <div id="panel" style="display:none">
+
+        <div class="row" style="margin: 0; margin-top: 10px">
+            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 0;width:50%">
+                <label>Xem theo ngày:</label><br />
+                @Html.TextBox("Date", null @*DateTime.Now.ToString("yyyy-MM-dd")*@, new { type = "date", required = "required", @class = "input-feild_date", onChange = "Selected('day')", id = "onchange" })
+
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 0;width:50%">
+                <label>Xem theo tháng:</label><br />
+                @Html.TextBox("Month", null @*DateTime.Now.ToString("yyyy-MM")*@, new { type = "month", required = "required", @class = "input-feild_date", onChange = "Selected('month')", id = "onchange_month" })
+
+
+            </div>
+            <input type="hidden" id="hd_date"/>
+        </div>
+        <div class="row" style="margin: 0; margin-top: 10px">
+            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 0;width:50%">
+                <label>Lọc theo:</label><br />
+                <select id="select-change-hd" name="select_hd">
+                    <option value="none">
+                        ------------------------
+                    </option>
+                    <option value="0">
+                        Đơn hàng đã thanh toán
+                    </option>
+                    <option value="1">
+                        Đơn hàng chưa thanh toán
+                    </option>
+                    <option value="2">
+                        Đơn hàng đã bị hủy
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 0;width:50%">
+
+
+            </div>
+        </div>
+       
+    </div>
+    <table width="100%" cellpadding="3" cellspacing="0" border="1" style="text-align: center; margin-top: 15px" class="tb_ql">
+        <thead style="font-size:0.9em">
+            <tr>
+                <th width="10%">
+                    Mã ĐH
+                </th>
+                <th width="15%">
+                    Tên người bán
+                </th>
+                <th>
+                    Ngày đặt hàng
+                </th>
+                <th>
+                    Tổng tiền
+                </th>
+                <th>
+                    Tình trạng
+                </th>
+                <th>
+                    Chuyển đơn hàng cho BEST
+                </th>
+                <th width="12%">
+                   Xem
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table_change">
+            @foreach (var item in Model)              
+            {
+                if (item.ID_NGUOIBAN != null)
+                {
+
+                    foreach (var getName in (ViewData["getTenNV"] as IEnumerable<DA_Web.Models.Table_NHANVIEN>).Where(m => m.ID_NHANVIEN == item.ID_NGUOIBAN))
+                    {
+                    
+               
+                            <tr>
+                            <td>
+                                @item.ID_DONHANG
+                            </td>
+                            <td>
+                                @getName.HoTen
+                            </td>
+                            <td>@item.NgayGiaoDich.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <span id="price">@string.Format("{0:0,000}", item.TONGTIEN)</span> VNĐ
+                            </td>
+                            <td>
+                                @if ((bool)item.Damua)
+                                {
+                                    <span>Đã thanh toán</span>
+                                }
+                                else
+                                {
+                                    if(item.TinhTrangDon == true)
+                                    {
+                                         <span>Chưa thanh toán</span>
+                                    }else
+                                    {
+                                         <span style="color:red;font-weight:800">Bị hủy <b class='open_lydo' style='color:blue' onclick='open_lydo(@item.ID_DONHANG)'>Xem</b></span>
+                                    }
+                                   
+                                }
+
+                            </td>
+                            <td width="17%" id="id_nvgiaohang_@item.ID_DONHANG">
+                                @if (item.ID_NGUOIGIAO != null)
+                                {
+                                    <img src="/Content/img/icon_success.png" width="40%" height="auto" />
+                                }
+                                else
+                                {
+                                    <a title="Xem" onclick="clickGetNV(@item.ID_DONHANG)"><img src="/Content/img/icon_warning.png" width="40%" height="auto" /></a>
+                                }
+
+                            </td>
+                            <td id="nhapkho"><a title="Xem" onclick="clickView(@item.ID_DONHANG)"><img src="/Content/image/icon_view.png" /></a></td>
+
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                     <tr>
+                            <td>
+                                @item.ID_DONHANG
+                            </td>
+                            <td>
+                                
+                            </td>
+                         <td>@item.NgayGiaoDich.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <span id="price">@string.Format("{0:0,000}", item.TONGTIEN)</span> VNĐ
+                            </td>
+                            <td>
+                                @if ((bool)item.Damua)
+                                {
+                                    <span>Đã thanh toán</span>
+                                }
+                                else
+                                {
+                                    if (item.TinhTrangDon == true)
+                                    {
+                                        <span>Chưa thanh toán</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:red;font-weight:800">Bị hủy <b class='open_lydo' style='color:blue' onclick='open_lydo(@item.ID_DONHANG)'>Xem</b> </span>
+                                    }
+
+                                }
+
+                            </td>
+                            <td width="17%" id="id_nvgiaohang_@item.ID_DONHANG">
+                                @if (item.ID_NGUOIGIAO != null)
+                                {
+                                    <img src="/Content/img/icon_success.png" width="40%" height="auto" />
+                                }
+                                else
+                                {
+                                    <a title="Xem" onclick="clickGetNV(@item.ID_DONHANG)"><img src="/Content/img/icon_warning.png" width="40%" height="auto" /></a>
+                                }
+
+                            </td>
+                            <td id="nhapkho"><a title="Xem" onclick="clickView(@item.ID_DONHANG)"><img src="/Content/image/icon_view.png" /></a></td>
+
+
+                        </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+
+   
+
+
+
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn" hidden="hidden">Open Modal</button>
+    
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 style="color:white">CHI TIẾT ĐƠN HÀNG</h4>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+
+                <table width="100%" cellpadding="3" cellspacing="0" border="1" style="text-align:center" class="table-bordered">
+                    <thead style="font-size:0.9em">
+                        <tr>
+                            <th>
+                                Mã SP
+                            </th>
+                            <th>
+                                Hình ảnh
+                            </th>
+                            <th>
+                                Tên SP
+                            </th>
+                            <th>
+                                Tùy chọn
+                            </th>
+                            <th>
+                                SL
+                            </th>
+                            <th>
+                                Đơn giá
+                            </th>
+                            <th>
+                                Tình trạng
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table_chitiet"></tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+   
+    <div class="back-page" style="font-size: 20px;">
+        <button onclick="goBack()" class="back-button"><i class="fa fa-arrow-left"></i> </button>   <span style="margin-left:5px">Quay lại</span>
+    </div>
+</div>
+
+<script src="~/Scripts/date.format.js"></script>

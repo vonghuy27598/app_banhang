@@ -1,0 +1,98 @@
+﻿@model DA_Web.Models.Table_NhaSX
+
+@{
+    ViewBag.Title = "EditNSX";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+
+<style>
+
+</style>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>SỬA NHÀ SẢN XUẤT</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        <div class="content" style="width:1000px;margin:auto">
+
+
+            <div class="form-group">
+                <div class="row">
+
+                    <div class="col-md-6 text">
+                        @Html.Label("Tên nhà sản xuất", new { @class = "control-label col-md-4" })
+                        @Html.TextBoxFor(model => model.NhaSX)
+                        <span style="color:red">@ViewBag.Loi1</span>
+                    </div>
+                    <div class="col-md-6 text">
+                        @Html.Label("Nơi sản xuất", new { @class = "control-label col-md-4" })
+                        @Html.TextBoxFor(model => model.NoiSX)
+                        <span style="color:red">@ViewBag.Loi1</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+            @*-----------------*@
+
+            <div class="form-group" style="margin-top:15px">
+                <div class="col-md-offset-2 col-md-10" style="text-align:center;">
+                    <input type="submit" value="Sửa" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section upload
+{
+    <script>
+        $(function () {
+
+            $('#btnUpload').click(function () {
+                $('#fileUpload').trigger('click');
+            });
+            $('#fileUpload').change(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $('#fileUpload').get(0);
+                    var files = fileUpload.files;
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Admin/SanPham/ProcessUpload',
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+
+                            $('#picture').val(urlImage);
+                        },
+                        error: function (err) {
+                            alert('Có lỗi khi upload ảnh: ' + err.statusText);
+                        }
+                    });
+                }
+            });
+        });
+
+
+    </script>
+}
+
+@if (ViewBag.MessError != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("@Html.Raw(ViewBag.MessError)");
+        };
+    </script>
+}

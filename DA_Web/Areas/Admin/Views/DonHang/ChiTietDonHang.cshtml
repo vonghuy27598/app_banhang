@@ -1,0 +1,147 @@
+﻿@model DA_Web.ViewModel.HoaDon
+@{
+    ViewBag.Title = "ChiTietDonHang";
+    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+}
+
+
+<style>
+    .cothinh {
+        position: relative;
+        z-index: 1;
+    }
+        .cothinh .hinhspHover {
+            max-width: 200px;
+            max-height: 200px;
+            display: none;
+            position: absolute;
+            z-index: 1;
+            top: -60px;
+            right: 115px;
+        }
+        .cothinh:hover .hinhspHover {
+            display: inline-block;
+        }
+</style>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="row" style="margin-bottom: 10px;text-align:center;display:block">
+            <span style="font-size:25px">Chi tiết đơn hàng số @Model.ID_DONHANG</span>
+            <hr style="width: 30%; border: 0.1px solid #00000047;" />
+        </div>
+        <div class="row" style="margin-bottom:10px">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+
+                @*@Html.DropDownList("dropdownlist", (IEnumerable<SelectListItem>)ViewBag.LoaiCon, "-----Chọn danh mục------", new { @id = "dropdownlist" })*@
+
+
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+
+                <span style="float:right">Ngày đặt hàng: @String.Format("{0:dd/MM/yyyy}", Model.NgayGiaoDich)</span>
+                
+
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:10px">
+            <div class="col-md-4 col-sm-4 col-xs-4">
+
+               Tên khách hàng : @Model.HOTEN
+
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+
+             Số điện thoại: @Model.SDT
+
+
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom:10px">
+            <div class="col-md-4 col-sm-4 col-xs-4">
+
+                Mã CTV : @Model.ID_NGUOIBAN
+
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+
+                Tên CTV: @Model.TEN_NGUOIBAN
+
+
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:10px">
+            <div class="col-md-4 col-sm-4 col-xs-4">
+
+                Mã nhân viên giao hàng: @Model.ID_NGUOIGIAO
+
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+
+                Tên nhân viên giao hàng: @Model.TEN_NGUOIGIAO
+
+
+            </div>
+        </div>
+
+
+
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th style="width: 14%;">Đơn giá</th>
+                        <th>Số lượng</th>
+                        <th>Tình trạng</th>                      
+                        <th colspan="3">Công cụ</th>
+                    </tr>
+                </thead>
+                <tbody class="table_change">
+                    @foreach (var item in ViewData["chitiet"] as IEnumerable<DA_Web.ViewModel.ChiTietHoaDon>)
+                    {
+                      
+                        <tr id="row_@item.ID_DONHANG">
+                            <td>@item.ID_SANPHAM</td>
+                            <td class="cothinh">
+                                <img src="@item.HinhAnh" alt="@item.TenSanPham" title="@item.TenSanPham" height="50" width="50" class="hinhsp"/>
+                                <img src="@item.HinhAnh" alt="@item.TenSanPham" title="@item.TenSanPham"  class="hinhspHover" />
+                            </td>
+                            <td>@item.TenSanPham</td>
+                            <td>@item.Giatien</td>
+                            <td>@item.SoLuong</td>                         
+                            <td>
+                                @if (item.TinhTrang == true)
+                                {
+                                    <span>Đã thanh toán <img src="~/Content/img/icon_success.png" width="30" height="30" /></span>
+                                }
+                                else
+                                {
+                                    <span>Chưa thanh toán <img src="~/Content/img/icon_warning.png" width="30" height="30" /></span>
+
+                                }
+                            </td>
+
+                            <td id="xoa">@Ajax.ImageActionLink("../../Content/image/icon_xoa.png", "Xóa", "Delete", new { @id = @item.ID_SANPHAM }, new AjaxOptions { Confirm = "Bạn có muốn xóa không?", OnComplete = "$('#row_" + @item.ID_SANPHAM + "').remove()", HttpMethod = "DELETE" })</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6" style="border:none"></td>
+                        <td  style="text-align: right; background-color: #fff4b6; font-weight: bold">
+                            Tổng tiền: @string.Format("{0:0,000}", Model.TONGTIEN) VNĐ
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
