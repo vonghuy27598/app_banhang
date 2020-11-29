@@ -5,6 +5,12 @@
 }
 
 <link href="~/Content/css/dangnhap.css" rel="stylesheet" />
+<style>
+    .mid{
+        background-color:transparent;
+        padding-top:50px
+    }
+</style>
 <!--kiểm tra việc nhập password-->
 <script type="text/javascript">
     var check = function () {
@@ -28,7 +34,10 @@
         event.target.setCustomValidity('Vui lòng nhập thông tin');
     }
 </script>
-<div class="primari-box registered-account dn">
+<div class="back-page" style="font-size: 20px">
+    <button onclick="goBack()" class="back-button"><i class="fa fa-arrow-left"></i> </button>   <span style="margin-left:5px">Quay lại</span>
+</div>
+<div class="primari-box registered-account dn" style="background-color:white">
     <form class="new-account-box" id="accountLogin" method="post" action="#">
         <h3 class="box-subheading" style="font-weight:bold;text-transform:uppercase">Đổi mật khẩu</h3>
         @using (Html.BeginForm())

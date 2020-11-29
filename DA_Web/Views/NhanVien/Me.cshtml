@@ -51,7 +51,11 @@ else
 
                 </li>
 
-                <li><a class="primary-btn cart-btn" href="@Url.Action("LichSuDatHang", "NhanVien", new {ID_NHANVIEN = @Model.ID_NHANVIEN })"><i class="fa fa-history"></i>Lịch sử đặt hàng</a></li>
+                <li><a class="primary-btn cart-btn" href="@Url.Action("LichSuDatHang", "NhanVien", new {ID_NHANVIEN = @Model.ID_NHANVIEN })">
+                    <i class="fa fa-history"></i>
+                    Lịch sử đặt hàng
+                    </a>
+                </li>
                 @if (Model.ID_LOAINHANVIEN == 2)
                 {
                     <li>
@@ -72,12 +76,20 @@ else
                 }
                 @if (Model.ID_LOAINHANVIEN == 5)
                 {
+                     <li>
+                        <a class="primary-btn cart-btn" href="@Url.Action("DanhMucChietKhau", "NhanVien")">
+                            <i class="fa fa-book"></i>
+                            Chiết khấu 
+                        </a>
+                    </li>
+                    
                     <li>
                         <a class="primary-btn cart-btn" href="@Url.Action("Boss_DaHuy", "NhanVien")">
-                            <i class="fa fa-book"></i>
+                            <i class="fa fa-ban"></i>
                             Đơn hàng bị hủy
                         </a>
                     </li>
+                    
                 }
             </ul>
         </nav>

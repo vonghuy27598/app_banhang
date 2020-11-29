@@ -1856,6 +1856,7 @@
     <Content Include="Content\css\AjaxLoader.html" />
     <Content Include="Content\css\animate.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\boss_ck.css" />
     <Content Include="Content\css\ct_product.css" />
     <Content Include="Content\css\dangnhap.css" />
     <Content Include="Content\css\dathang.css" />
@@ -2504,6 +2505,9 @@
     <Content Include="Views\Error\ErrorPage.cshtml" />
     <Content Include="Views\NhanVien\DonGiaoHang_DaHuy.cshtml" />
     <Content Include="Views\NhanVien\Boss_DaHuy.cshtml" />
+    <Content Include="Views\NhanVien\Boss_ChietKhauCTV.cshtml" />
+    <Content Include="Views\NhanVien\Boss_ChietKhauChotDon.cshtml" />
+    <Content Include="Views\NhanVien\DanhMucChietKhau.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

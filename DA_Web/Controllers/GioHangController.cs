@@ -455,7 +455,7 @@ namespace DA_Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult DatHang(FormCollection collection)
+        public JsonResult DatHang(string PhanHoi)
         {
             List<GioHang> listGioHang = LayGioHang();
             //Thêm đơn hàng
@@ -473,6 +473,8 @@ namespace DA_Web.Controllers
             ddh.NgayGiaoDich = DateTime.Now;
             ddh.TONGTIEN = TongTien();
             ddh.Damua = false;
+            ddh.TinhTrang = true;
+            ddh.PhanHoi = PhanHoi;
             db.Table_DONHANGs.InsertOnSubmit(ddh);
             db.SubmitChanges();
             //Thêm chi tiết đơn hàng

@@ -1,16 +1,22 @@
 ﻿@model IEnumerable<DA_Web.ViewModel.NhanVien>
 @{
-    ViewBag.Title = "ChietKhauNgay";
-    Layout = "~/Areas/Admin/Views/Shared/layout_admin.cshtml";
+    ViewBag.Title = "Boss_ChietKhauChotDon";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
 }
+
 <link href="~/Content/css/yearpicker.css" rel="stylesheet" />
 <link href="~/Content/admin/css/ck_layout.css" rel="stylesheet" />
 <link href="~/Content/w3_modal.css" rel="stylesheet" />
+<link href="~/Content/css/boss_ck.css" rel="stylesheet" />
 <style>
-    .open-dh {
-        cursor: pointer;
-        text-decoration: underline !important;
-        color: blue!important;
+    #dataTable td:nth-child(2) {
+        display: none;
+    }
+    #dataTable td:nth-child(5) {
+        display: none;
+    }
+    #dataTable td:last-child{
+        display:none
     }
 </style>
 
@@ -25,20 +31,20 @@
         offText();
         $('#dropdownlist_takenhanvien').prop("disabled", true);
         $('input[type=radio][name=search_CK]').change(function () {
-                if (this.value == 'day') {
-                    offText();
-                    $("#dayPicker").prop("disabled", false);
-                    
-                }
-                else if (this.value == 'month') {
-                    offText();
-                    $("#monthPicker").prop("disabled", false);
-                }else
-                {
-                    offText();
-                    $("#yearPicker").prop("disabled", false);
-                }
-                $("#hd_date").text(this.value);
+            if (this.value == 'day') {
+                offText();
+                $("#dayPicker").prop("disabled", false);
+
+            }
+            else if (this.value == 'month') {
+                offText();
+                $("#monthPicker").prop("disabled", false);
+            }else
+            {
+                offText();
+                $("#yearPicker").prop("disabled", false);
+            }
+            $("#hd_date").text(this.value);
         });
         $('#rd_nv').change(function () {
             var check = $(this).is(':checked');
@@ -48,10 +54,10 @@
                 $('#dropdownlist_takenhanvien').prop("disabled", true);
             }
         });
-        
+
     });
 
-   
+
 
     function offText()
     {
@@ -60,98 +66,10 @@
         $("#yearPicker").prop("disabled", true);
     }
 
-    function showCT(obj)
-    {
-        var idnv = obj;
-        var value_date = $("#hd_date").text();
-        var form = "no_date";
-        var d = "";
-        if (value_date == 'day') {
-            form = "day";
-            d = $("#dayPicker").val();
-        }
-        else if (value_date == 'month') {
-            form = "month";
-            d = $("#monthPicker").val();
-        } else if(value_date == 'year') {
-            form = "year";
-            d = $("#yearPicker").val();
-
-        }   
-        $.ajax({
-            url: "ChiTietSoDon",
-            data: { date: d, idnv: idnv, form: form },
-            datatype: "json",
-            type: "POST",
-            success: function (response) {
-                if (response.status != null) {
-                    $(".table-ct").find("tr:gt(0)").remove();
-                        
-                        var contentTable = "";
-                        var count = 1;
-                        var bcount="";
-                        var background = "";
-                        $.each(response.status, function () {
-                            //var date = this.NgayDatHang;
-                            //var nowDate = new Date(parseInt(date.substr(6)));
-                            //var result = nowDate.format("dd/mm/yyyy");
-                            var hoten_ctv = "";
-                            var hoten_kh = "";
-                            var chietkhau = "";
-                            var id_nv = "";
-                            
-                            if(this.HoTen != null)
-                            {
-                                hoten_ctv = this.HoTen;
-                                chietkhau = formatNumber(this.ChietKhau, '.', ',') +" VNĐ";
-                            }
-                            if (this.TenKH != null) {
-                                if(this.HoTen == null)
-                                    hoten_kh = this.TenKH;
-                            }
-                            if(this.ID_NHANVIEN != null)
-                            {
-                                id_nv = this.ID_NHANVIEN;
-                            }
-                            var empty ="";
-                            if (bcount != this.ID_DONHANG)
-                            {
-                                if(count%2 != 0)
-                                {
-                                    background = "background-color:beige";
-                                }else
-                                {
-                                    background = "";
-                                }
-                                contentTable += '<tr style="'+background+'" id=row_' + this.ID_DONHANG + '><td>' + count + '</td><td>' + this.TenSanPham + '</td><td>' + this.TuyChon + '</td> <td>' + this.SoLuong + '</td><td>' + formatNumber(this.DonGia, '.', ',') + ' VNĐ</td><td>' + formatNumber(this.TongTien, '.', ',') + ' VNĐ</td><td>' + chietkhau + ' </td><td>' + hoten_ctv + '</td><td>'+id_nv+'</td><td>' + hoten_kh + '</td> </tr>';
-
-                            } else
-                            {
-                                
-                                contentTable += '<tr style="'+background+'" id=row_' + this.ID_DONHANG + '><td>' + "" + '</td><td>' + this.TenSanPham + '</td><td>' + this.TuyChon + '</td> <td>' + this.SoLuong + '</td><td>' + formatNumber(this.DonGia, '.', ',') + ' VNĐ</td><td>' + formatNumber(this.TongTien, '.', ',') + ' VNĐ</td><td>' + chietkhau + ' </td><td>' + hoten_ctv + '</td><td>'+id_nv+'</td><td>' + hoten_kh + '</td> </tr>';
-                                count--;
-                                if(count%2 != 0)
-                                {
-                                    background = "background-color:beige";
-                                }else
-                                {
-                                    background = "";
-                                }
-                                
-                            }
-                            bcount = this.ID_DONHANG;
-                            count++;
-                        });
-                        $('.table_chitietsodon').append(contentTable);
-                   
-                }
-            }
-        });
-        $('#myBtn').click();
-    }
-
-
    
+
+
+
 
 
     function show_ck() {
@@ -162,14 +80,14 @@
             if (value_date.length > 0) {
                 if (value_date == 'day') {
                     Selected_Day(true);
-               
+
 
                 }
                 else if (value_date == 'month') {
                     Selected_Month(true);
                 } else {
                     Selected_Year(true);
-               
+
                 }
             } else {
                 alert("Vui lòng chọn thời gian");
@@ -198,7 +116,7 @@
             if (!check)
                 idnv = 0;
             $.ajax({
-                url: "ChietKhauNgay_select_Year",
+                url: "/ChietKhau/ChietKhauNgay_select_Year",
                 data: { date: d, idnv: idnv },
                 datatype: "json",
                 type: "POST",
@@ -216,8 +134,8 @@
                                     tongdoanhthu = formatNumber(this.TongDoanhThu, '.', ',');
                                     chietkhau = formatNumber(this.ChietKhauNgay, '.', ',');
                                 }
-                                    
-                                contentTable += '<tr id=row_' + this.ID_NHANVIEN + '><td>' + count + '</td><td>'+this.ID_NHANVIEN+'</td><td>' + this.HoTen + '</td> <td><a class="open-dh" onclick="showCT(' + this.ID_NHANVIEN + ')">' + this.TongSoDon + '</a></td> <td>' + tongdoanhthu + ' VNĐ </td><td>'+chietkhau+' VNĐ</td> </tr>';
+
+                                contentTable += '<tr id=row_' + this.ID_NHANVIEN + '><td>' + count + '</td><td>'+this.ID_NHANVIEN+'</td><td>' + this.HoTen + '</td> <td><a class="open-dh" >' + this.TongSoDon + '</a></td> <td>' + tongdoanhthu + ' <sup>đ</sup> </td><td>'+chietkhau+' <sup>đ</sup></td> </tr>';
                                 count ++;
                             });
                             $('.table_change').append(contentTable);
@@ -230,7 +148,7 @@
                 }
             });
 
-           
+
 
         }
 
@@ -242,16 +160,16 @@
             if (!check)
                 idnv = 0;
             $.ajax({
-                url: "ChietKhauNgay_select_Month",
+                url: "/ChietKhau/ChietKhauNgay_select_Month",
                 data: { date: d, idnv: idnv },
                 datatype: "json",
                 type: "POST",
                 success: function (response) {
                     if (response.status != null) {
                         $("#dataTable").find("tr:gt(0)").remove();
-                        
+
                         if (response.count >0)
-                        {     
+                        {
                             var contentTable = "";
                             var count = 1;
                             $.each(response.status, function () {
@@ -262,7 +180,7 @@
                                     chietkhau = formatNumber(this.ChietKhauNgay, '.', ',');
                                 }
 
-                                contentTable += '<tr id=row_' + this.ID_NHANVIEN + '><td>' + count + '</td><td>'+this.ID_NHANVIEN+'</td><td>' + this.HoTen + '</td> <td><a class="open-dh" onclick="showCT(' + this.ID_NHANVIEN + ')">' + this.TongSoDon + '</a></td> <td>' + tongdoanhthu + ' VNĐ </td><td>'+chietkhau+' VNĐ</td> </tr>';
+                                contentTable += '<tr id=row_' + this.ID_NHANVIEN + '><td>' + count + '</td><td>'+this.ID_NHANVIEN+'</td><td>' + this.HoTen + '</td> <td><a class="open-dh">' + this.TongSoDon + '</a></td> <td>' + tongdoanhthu + ' <sup>đ</sup> </td><td>'+chietkhau+' <sup>đ</sup></td> </tr>';
                                 count++;
                             });
                             $('.table_change').append(contentTable);
@@ -272,7 +190,7 @@
                             $('.table_change').append(contentTable);
                             alert('Không có dữ liệu phù hợp');
                         }
-                    } 
+                    }
                 }
             });
 
@@ -286,7 +204,7 @@
             if (!check)
                 idnv = 0;
             $.ajax({
-                url: "ChietKhauNgay_select",
+                url: "/ChietKhau/ChietKhauNgay_select",
                 data: { date: d, idnv: idnv },
                 datatype: "json",
                 type: "POST",
@@ -304,7 +222,7 @@
                                     chietkhau = formatNumber(this.ChietKhauNgay, '.', ',');
                                 }
 
-                                contentTable += '<tr id=row_' + this.ID_NHANVIEN + '><td>' + count + '</td><td>'+this.ID_NHANVIEN+'</td><td>' + this.HoTen + '</td> <td><a class="open-dh" onclick="showCT(' + this.ID_NHANVIEN + ')">' + this.TongSoDon + '</a></td> <td>' + tongdoanhthu + ' VNĐ </td><td>'+chietkhau+' VNĐ</td> </tr>';
+                                contentTable += '<tr id=row_' + this.ID_NHANVIEN + '><td>' + count + '</td><td>'+this.ID_NHANVIEN+'</td><td>' + this.HoTen + '</td> <td><a class="open-dh" >' + this.TongSoDon + '</a></td> <td>' + tongdoanhthu + ' <sup>đ</sup> </td><td>'+chietkhau+' <sup>đ</sup></td> </tr>';
                                 count++;
                             });
 
@@ -318,14 +236,14 @@
                 }
             });
 
-         
+
 
         }
 
 
-       
+
     }
-   
+
     function formatNumber(nStr, decSeperate, groupSeperate) {
         nStr += '';
         x = nStr.split(decSeperate);
@@ -338,54 +256,47 @@
         return x1 + x2;
     }
 </script>
+<div class="back-page" style="font-size: 20px">
+    <button onclick="goBack()" class="back-button"><i class="fa fa-arrow-left"></i> </button>   <span style="margin-left:5px">Quay lại</span>
+</div>
 
 <div class="card shadow mb-4">
-    <div class="card-body">
+    <div class="card-body" style="margin-top:60px">
         <div class="row" style="margin-bottom: 10px;text-align:center;display:block">
-            <span style="font-size:25px">THỐNG KÊ VỀ ĐƠN HÀNG CỦA <span style="color:red;font-weight:bold">NHÂN VIÊN CHỐT HÀNG</span> (THÀNH CÔNG)</span>
+            <span style="font-size:25px">THỐNG KÊ VỀ ĐƠN HÀNG CỦA <span style="color:red;font-weight:bold">NHÂN VIÊN CHỐT HÀNG</span> </span>
             <hr style="width: 30%; border: 0.1px solid #000047;margin:20px auto!important" />
-            <input type="hidden" id="hd_date"> 
+            <input type="hidden" id="hd_date">
         </div>
-        <div class="row" style="margin-bottom:10px;margin-top:30px">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <a href="@Url.Action("ChietKhauNgay_KhongThanhCong","ChietKhau")" class="" style="padding: 10px 15px;background-color: #9e56e0;border-radius: 10px;color:white;float:right">Xem đơn hàng không thành công</a>
-                </div>
-            </div>
+       
         <div class="row" style="margin-bottom:10px">
             <div class="col-md-4 col-sm-4 col-xs-4">
-                <input type="radio" name="search_CK" title="Theo ngày" style="margin-right:5px" id="rd_day" class="rd_select" value="day"><label>Xem theo ngày</label>
+                <input type="radio" name="search_CK" title="Theo ngày" style="margin-right:5px" id="rd_day" class="rd_select" value="day"><label>Xem theo ngày</label><br />
                 @Html.TextBox("Date", DateTime.Now.ToString("yyyy-MM-dd"), new { @disable = "disable", @style = "width: 180px;", type = "date", required = "required", @class = "form-control input-feild", id = "dayPicker" })
                 <p id="demo"></p>
             </div>
             <div class="col-md-4 col-sm-6 col-xs-4">
-                <input type="radio" name="search_CK" style="margin-right:5px" id="rd_month" class="rd_select" value="month"><label>Xem theo tháng</label>
+                <input type="radio" name="search_CK" style="margin-right:5px" id="rd_month" class="rd_select" value="month"><label>Xem theo tháng</label><br />
                 @Html.TextBox("Month", DateTime.Now.ToString("yyyy-MM"), new { @disable = "disable", @style = "width: 255px;", type = "month", required = "required", @class = "form-control input-feild", id = "monthPicker" })
                 <p id="demo"></p>
 
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4">
-                <input type="radio" name="search_CK" style="margin-right:5px" id="rd_year" class="rd_select" value="year"><label>Xem theo năm</label>
+                <input type="radio" name="search_CK" style="margin-right:5px" id="rd_year" class="rd_select" value="year"><label>Xem theo năm</label><br />
                 @Html.TextBox("Year", "", new { @disable = "disable", @style = "width: 180px;", type = "text", required = "required", @class = "form-control input-feild ", id = "yearPicker" })
                 <p id="demo"></p>
             </div>
         </div>
         <div class="row" style="margin-bottom:10px">
-          
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <input type="checkbox" name="search_with_name" title="Chọn cộng tác viên" style="margin-right:5px" id="rd_nv" class="rd_select_nv" value="true">
-                <label>Chọn nhân viên</label>
-                @Html.DropDownList("dropdownlist_takenhanvien", (IEnumerable<SelectListItem>)ViewBag.NhanVien, new { @id = "dropdownlist_takenhanvien", @style = "display:block;padding: 5px 10px;border-radius: 6px;" })
-                <p id="demo"></p>
 
-            </div>
            
+
             <div class="col-md-4 col-sm-4 col-xs-4">
                 <label></label>
                 <p class="show-ds" id="show-ck" onclick="show_ck()">Xem danh sách</p>
                 <p id="demo"></p>
 
             </div>
-           
+
         </div>
 
         <div class="table-responsive">
@@ -393,39 +304,33 @@
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>ID nhân viên</th>
+                       
                         <th>Tên nhân viên</th>
                         <th>Số đơn hàng</th>
-                        <th>Tổng tiền</th>
-                        <th>Chiết khấu trả cho CTV</th>
+                       
                     </tr>
                 </thead>
                 <tbody class="table_change">
                     @{ int count = 0;}
-                    @foreach(var item in Model)
+                    @foreach (var item in Model)
                     {
 
                         count++;
-                        
+
                         <tr>
                             <td>@count</td>
-                            <td>@item.ID_NHANVIEN</td>
+                           
                             <td>
                                 @item.HoTen
                             </td>
                             <td>
-                                <a class="open-dh" onclick="showCT(@item.ID_NHANVIEN)">@item.TongSoDon</a>  
+                                <span class="open-dh" >@item.TongSoDon</span>
                             </td>
-                            <td>
-                              @if (item.TongDoanhThu != null) { @String.Format("{0:0,0}", item.TongDoanhThu)}else{@String.Format("{0:0}", 0)} VNĐ
-                            </td>
-                            <td>
-                                @if (item.TongDoanhThu != null){ @String.Format("{0:0,0}", item.ChietKhauNgay)}else{@String.Format("{0:0}", 0)} VNĐ
-                            </td>
+                           
                         </tr>
-                        
+
                     }
-                 
+
                 </tbody>
             </table>
 
@@ -433,7 +338,7 @@
     </div>
 </div>
 
- <!-- Trigger/Open The Modal -->
+<!-- Trigger/Open The Modal -->
 <button id="myBtn" hidden="hidden">Open Modal</button>
 
 <!-- The Modal -->
@@ -501,3 +406,4 @@
 
 <script src="~/Scripts/date.format.js"></script>
 <script src="~/Scripts/yearpicker.js"></script>
+

@@ -1,0 +1,13 @@
+﻿#dataTable th{
+    font-size:calc(11px + (15 - 11) * ((100vw - 300px) / (1600 - 300)));
+    text-align:center;
+    vertical-align: middle;
+    padding: 10px 5px;
+}
+
+#dataTable td{
+    font-size:calc(10px + (15 - 10) * ((100vw - 300px) / (1600 - 300)));
+    text-align:center;
+    vertical-align: middle;
+    padding: 10px 0;
+}

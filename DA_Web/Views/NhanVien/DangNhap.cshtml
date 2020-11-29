@@ -5,8 +5,13 @@
 }
 <link href="~/Content/css/dangnhap.css" rel="stylesheet" />
 
-
-<div class="primari-box registered-account dn">
+<style>
+    .mid{
+        background-color:transparent;
+        padding-top:50px
+    }
+</style>
+<div class="primari-box registered-account dn" style="background-color:#fff">
     <form class="new-account-box" id="accountLogin" method="post" action="#">
         <h3 class="box-subheading" style="font-weight:bold;text-transform:uppercase">Đăng nhập</h3>
         @using (Html.BeginForm())

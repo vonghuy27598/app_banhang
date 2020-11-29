@@ -234,23 +234,7 @@ function openNote_PH(obj) {
 
     });
 }
-function openNote_GC(obj) {
-    var id_dh = obj;
-    $.ajax({
-        url: "openNote_GC",
-        data: { ID_DONHANG: id_dh },
-        datatype: "json",
-        type: "POST",
-        success: function (response) {
-            if (response.status != null) {
-                swal("Ghi chú đơn hàng", response.status);
 
-            }
-
-        }
-
-    });
-}
 function openNote(obj) {
     var id_dm = obj;
     $.ajax({

@@ -86,8 +86,7 @@ namespace DA_Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Signup(FormCollection form)
         {
-            bool status = false;
-            string mess= "";
+           
             var hoten = form["hoten"];
             var sdt = form["sdt"];
             string gioitinh = form["rdGioiTinh"];

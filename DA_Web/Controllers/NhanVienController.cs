@@ -274,15 +274,7 @@ namespace DA_Web.Controllers
                 status = result
             }, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
-        public JsonResult openNote_GC(int ID_DONHANG)
-        {
-            string result = db.Table_DONHANGs.Where(m => m.ID_DONHANG == ID_DONHANG).Select(m => m.GhiChu).Single();
-            return Json(new
-            {
-                status = result
-            }, JsonRequestBehavior.AllowGet);
-        }
+       
         [HttpPost]
         public JsonResult change_select_donhang(int form)
         {
@@ -454,12 +446,34 @@ namespace DA_Web.Controllers
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }
-
+        //Boss
         public ActionResult Boss_DaHuy()
         {
             var model = DonHang.getHoaDonGiaoHang_DaHuy();
             return View(model);
+        }   
+        public ActionResult Boss_ChietKhauCTV() 
+        {
+            Session["TaiKhoanAdmin"] =(Table_NHANVIEN) Session["User1"];
+            var model = NhanVienDAO.getChietKhau_byIDNV_CTV().GroupBy(x => new { x.ID_NHANVIEN, x.HoTen, x.TongSoDon, x.TongDoanhThu }).Select(sl => new DA_Web.ViewModel.NhanVien { ID_NHANVIEN = sl.Key.ID_NHANVIEN, HoTen = sl.Key.HoTen, ChietKhauNgay = sl.Sum(m => m.ChietKhauNgay), TongSoDon = sl.Key.TongSoDon, TongDoanhThu = sl.Key.TongDoanhThu });           
+            return View(model);
         }
+
+        public ActionResult DanhMucChietKhau()
+        {
+            return View();
+        }
+
+
+        public ActionResult Boss_ChietKhauChotDon()
+        {
+            Session["TaiKhoanAdmin"] = (Table_NHANVIEN)Session["User1"];
+            var model = NhanVienDAO.getChietKhau_byIDNV().GroupBy(x => new { x.ID_NHANVIEN, x.HoTen, x.TongSoDon, x.TongDoanhThu }).Select(sl => new DA_Web.ViewModel.NhanVien { ID_NHANVIEN = sl.Key.ID_NHANVIEN, HoTen = sl.Key.HoTen, ChietKhauNgay = sl.Sum(m => m.ChietKhauNgay), TongSoDon = sl.Key.TongSoDon, TongDoanhThu = sl.Key.TongDoanhThu });
+           
+            return View(model);
+        }
+
+       
 
         public void setDDlistNhanVien(int? selectedId = null)
         {

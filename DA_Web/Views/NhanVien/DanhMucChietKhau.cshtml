@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "DanhMucChietKhau";
+    Layout = "~/Views/Shared/layout_nhanvien.cshtml";
+}
+<link href="~/Content/css/me.css" rel="stylesheet" />
+<style>
+    .mid{
+        background-color:transparent
+    }
+    body{
+        background-color:white;
+        height:0%
+    }
+</style>
+<div class="mid" style="margin-top:70px">
+    <nav>
+        <ul class="list-inline">        
+           
+            <li><a class="primary-btn cart-btn" href="@Url.Action("Boss_ChietKhauCTV", "NhanVien")"><i class="fa fa-history"></i>Cộng tác viên</a></li>
+            <li><a class="primary-btn cart-btn" href="@Url.Action("Boss_ChietKhauChotDon", "NhanVien")"><i class="fa fa-history"></i>Nhân viên chốt đơn</a></li>
+        </ul>
+    </nav>
+</div>
+<div class="back-page" style="font-size: 20px">
+    <button onclick="goBack()" class="back-button"><i class="fa fa-arrow-left"></i> </button>   <span style="margin-left:5px">Quay lại</span>
+</div>
+
+
