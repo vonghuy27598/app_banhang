@@ -2,9 +2,21 @@
 var w = window.innerWidth;
 if (w < 800) {
     window.onscroll = function () {
+        $("#txtKeyword").css("width", "45px");
+        $("#logo1").css("display", "inline");
         scrollFunction()
     };
 }
+$("#txtKeyword").click(function()
+{
+    $(this).css("width", "200%");
+    $("#logo1").css("display", "none");
+    event.stopPropagation();
+})
+$(document).click(function () {
+    $("#txtKeyword").css("width", "45px");
+    $("#logo1").css("display", "inline");
+});
 function scrollFunction() {
         
         if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
