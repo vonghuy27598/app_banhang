@@ -415,7 +415,6 @@ ol {
     padding: 15px 0;
     position: relative;
     right: 0px;
-   
     width: 60%
 }
 
@@ -3956,7 +3955,8 @@ input[type=number] {
 
     .categories__item_setName {
         height: 25%;
-        padding: 10px
+        padding: 10px;
+        
     }
 
     .categories__item h5 a {
@@ -4874,6 +4874,7 @@ input[type=number] {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 90%;
+    margin-top:10px
 }
 
 @media only screen and (min-width:340px) and (max-width:399px) {

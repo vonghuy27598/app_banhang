@@ -127,16 +127,16 @@ namespace DA_Web.Areas.Admin.Controllers
                 tb_sp.ID_LOAISANPHAM = (int)sp.ID_LOAISANPHAM;
                 tb_sp.Ngung = sp.Ngung;
                 tb_sp.UuTien = sp.UuTien;
+              
                 tb_sp.DonGia = (double)sp.DonGia;
                 tb_sp.ChietKhau = sp.ChietKhau;
                 tb_sp.ID_NSX = sp.ID_NSX;
                 tb_sp.SIZE = sp.Size;
                 tb_sp.MAUSAC = sp.MauSac;
                 tb_sp.CHATLIEU = sp.CHATLIEU;
-                tb_sp.HINHANH = sp.HINHANH;
-                sp.SoLuong = 0;
-                sp.Viewer = 0;
-                tb_sp.SoLuong = sp.SoLuong;
+                tb_sp.HINHANH = sp.HINHANH;              
+                tb_sp.SoLuong = 0;
+                tb_sp.VIEWER = 0;
                 data.Table_SANPHAMs.InsertOnSubmit(tb_sp);
                 data.SubmitChanges();
                 var danhmuc = data.Table_LOAISANPHAMs.First(m => m.ID_LOAISANPHAM == ID_LOAISANPHAM);

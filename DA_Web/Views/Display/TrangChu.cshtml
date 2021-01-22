@@ -19,10 +19,10 @@
                 @foreach (var item in (ViewData["spHot"] as IEnumerable<DA_Web.Models.Table_SANPHAM>).Where(m => m.UuTien == true))
                 {
                     <a href="@Url.Action("ChiTietSanPham", "Display", new { id = item.ID_SANPHAM })">
-                        <div class="col-lg-3 bg-item">
+                        <div class="col-lg-3 bg-item" style="border-radius: 10px 10px;">
 
                             <div class="categories__item set-bg">
-                                <img style="border-radius: 10px 10px;" src="@item.HINHANH" />
+                                <img src="@item.HINHANH" />
                             </div>
                             <div class="categories__item_setName">
                                 <h5>@item.TenSanPham</h5>
@@ -49,10 +49,10 @@
                 @foreach (var item in (ViewData["spTruyCap"] as IEnumerable<DA_Web.Models.Table_SANPHAM>).OrderByDescending(m => m.VIEWER).Take(10).Where(m => m.Ngung == false))
                 {
                     <a href="@Url.Action("ChiTietSanPham", "Display", new { id = item.ID_SANPHAM })">
-                        <div class="col-lg-3 bg-item">
+                        <div class="col-lg-3 bg-item" style="border-radius: 10px 10px;">
 
                             <div class="categories__item set-bg">
-                                <img style="border-radius: 10px 10px;height:100%" src="@item.HINHANH" />
+                                <img style="height:100%" src="@item.HINHANH" />
 
                             </div>
                             <div class="categories__item_setName">
@@ -81,24 +81,24 @@
         </div>
         <div class="row featured__filter">
             @foreach (var item in (ViewData["spBanChay"] as IEnumerable<DA_Web.ViewModel.Product_Full>).Where(m => m.Ngung == false))
-            {
-                <div class="col-lg-3 col-md-3 col-sm-3 showdm bg-item">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg item ">
-                            <a href="@Url.Action("ChiTietSanPham", "Display", new { id = item.ID_SANPHAM })"><img src="@item.HINHANH" alt="product-image" class="featured__item__pic set-bg" /></a>
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li class="add-to-cart"><a onclick="AddCart_fly(@item.ID_SANPHAM)"><i class="fa fa-shopping-cart add-to-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="@Url.Action("ChiTietSanPham", "Display", new { id = item.ID_SANPHAM })">@item.TenSanPham</a></h6>
-                            <h5><span class="price">@string.Format("{0:0,000}", item.DonGia) VNĐ</span></h5>
-                        </div>
-                    </div>
-                </div>
-            }
+{
+    <div class="col-lg-3 col-md-3 col-sm-3 showdm bg-item" style="border-radius: 10px 10px;">
+        <div class="featured__item">
+            <div class="featured__item__pic set-bg item ">
+                <a href="@Url.Action("ChiTietSanPham", "Display", new { id = item.ID_SANPHAM })"><img src="@item.HINHANH" alt="product-image" class="featured__item__pic set-bg" /></a>
+                <ul class="featured__item__pic__hover">
+                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                    <li class="add-to-cart"><a onclick="AddCart_fly(@item.ID_SANPHAM)"><i class="fa fa-shopping-cart add-to-cart"></i></a></li>
+                </ul>
+            </div>
+            <div class="featured__item__text">
+                <h6><a href="@Url.Action("ChiTietSanPham", "Display", new { id = item.ID_SANPHAM })">@item.TenSanPham</a></h6>
+                <h5><span class="price">@string.Format("{0:0,000}", item.DonGia) VNĐ</span></h5>
+            </div>
+        </div>
+    </div>
+}
         </div>
 
 

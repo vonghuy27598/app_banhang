@@ -2,20 +2,23 @@
 
 <style>
     #txtKeyword {
-        width: 45px;
-        height: 45px;
+        width: 35px;
+        height: 35px;
         border-radius: 30px;
         -webkit-transition: width 0.4s ease-in-out;
         transition: width 0.4s ease-in-out;
         background-image: url('../../Content/image/searchicon.png');
         background-repeat: no-repeat;
-        background-position: 10px 10px;
-        padding-left:35px
+        background-position: 7px 7px;
+      
+        background-size: 15px;
+        padding-left: 20px;
     }
 
         /* When the input field gets focus, change its width to 100% */
         #txtKeyword:focus {
             width: 200%;
+            padding-left:30px
         }
 </style>
 <!-- Page Preloder -->
@@ -132,9 +135,9 @@
                         </ul>
                     </div>
                 </div>
-                <div id="search" style="padding: 15px 15px 15px 0px; width: 43%" class="hero__search__form">
-                    <form id="form" action="/Display/TimKiem" method="get" class="search-form-cat">
-                        <input type="text" id="txtKeyword" class="form-control search-form" name="keyword" required />
+                <div id="search" style="padding: 21px 21px 21px 10px; width: 43%" class="hero__search__form">
+                    <form id="form" action="/Display/TimKiem" method="get" class="search-form-cat" >
+                        <input type="text" id="txtKeyword" class="form-control search-form" name="keyword" required placeholder="Tìm kiếm"/>
                         <button hidden="hidden" class="site-btn" value="Search" name="s" type="submit"><i class="fa fa-search"></i></button>
                     </form>
                 </div>

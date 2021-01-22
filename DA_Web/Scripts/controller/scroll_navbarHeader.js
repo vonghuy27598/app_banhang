@@ -2,9 +2,22 @@
 var w = window.innerWidth;
 if (w < 800) {
     window.onscroll = function () {
+        $("#txtKeyword").css("width", "35px");
+        $("#txtKeyword").blur();
+        $("#logo1").css("display", "inline");
         scrollFunction()
     };
 }
+$("#txtKeyword").click(function()
+{
+    $(this).css("width", "200%");
+    $("#logo1").css("display", "none");
+    event.stopPropagation();
+})
+$(document).click(function () {
+    $("#txtKeyword").css("width", "35px");
+    $("#logo1").css("display", "inline");
+});
 function scrollFunction() {
         
         if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
@@ -14,7 +27,7 @@ function scrollFunction() {
             document.getElementById("logo").style.width = "100%";
             document.getElementById("logo").style.paddingLeft = "30px";
             document.getElementById("cart").style.padding = "5px 15px 0px 15px";
-            document.getElementById("search").style.padding = "5px";
+            document.getElementById("search").style.padding = "11px";
             document.getElementById("img_logo").src = "/Content/image/logo/logo_black.png";
             document.getElementById("content_tainer").style.paddingLeft = "15px";
             document.getElementById("content_tainer").style.paddingRight = "15px";
@@ -33,7 +46,7 @@ function scrollFunction() {
             document.getElementById("logo").style.marginLeft = "0px";
             document.getElementById("logo").style.paddingLeft = "0px";
             document.getElementById("cart").style.paddingRight = "15px";
-            document.getElementById("search").style.paddingTop = "15px";
+            document.getElementById("search").style.paddingTop = "21px";
             document.getElementById("form").style.padding = "0px 0";
             document.getElementById("cart").style.padding = "0px";
             document.getElementById("img_logo").src = "/Content/image/logo/logo_black.png";
